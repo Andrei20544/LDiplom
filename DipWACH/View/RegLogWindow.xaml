@@ -1,0 +1,114 @@
+﻿<Window x:Class="DipWACH.View.RegLogWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DipWACH.View"
+        xmlns:MVM="clr-namespace:DipWACH.ViewModel"
+        xmlns:gif="http://wpfanimatedgif.codeplex.com"
+        mc:Ignorable="d"
+        Title="" 
+        Height="500" 
+        MinHeight="500"
+        MaxHeight="500"
+        Width="500"
+        MinWidth="500"
+        MaxWidth="500"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None" MouseLeftButtonDown="Window_MouseLeftButtonDown">
+
+    <!--<Window.DataContext>
+        <MVM:MainViewModel/>
+    </Window.DataContext>-->
+    
+    <Grid Background="Black">
+
+        <Image Source="/Resource/fon.jpg"
+               Stretch="Fill">
+        </Image>
+
+        <!--Main-->
+        <Grid>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="65"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <!--Header-->
+            <Grid Background="#FF212C36">
+
+                <TextBlock HorizontalAlignment="left"
+                           VerticalAlignment="Center"
+                           Margin="30 0 0 0"
+                           FontSize="35"
+                           FontWeight="ExtraBold"
+                           Text="ВОДОКАНАЛ" 
+                           Foreground="#FF2E86B9"/>
+
+                <Button Style="{StaticResource CloseBTN}"
+                        Command="{Binding CloseApp}"
+                        HorizontalAlignment="Right"
+                        Margin="0 0 15 0"/>
+
+            </Grid>
+
+            <!--Content-->
+            <Grid Grid.Row="1">
+
+                <UniformGrid HorizontalAlignment="Center"
+                             VerticalAlignment="Center"
+                             Columns="1"
+                             Rows="5">
+
+                    <TextBlock Text="Вход"
+                               HorizontalAlignment="Center"
+                               FontSize="30"/>
+
+                    <Grid Margin="0 5 0 5">
+                        <TextBox Style="{StaticResource MainTextBox}"
+                                 Text="{Binding Login}"
+                                 Name="LTextBox"/>
+                        <TextBlock Style="{StaticResource UnderBoxTextBlockLogin}"
+                                   Text="Логин"/>
+                    </Grid>
+
+                    <Grid>
+                        <TextBox Style="{StaticResource MainTextBox}"
+                                 Text="{Binding Password}"
+                                 Name="PTextBox"/>
+                        <TextBlock Style="{StaticResource UnderBoxTextBlockPassword}"
+                                   Text="Пароль"/>
+                    </Grid>
+
+                    <TextBlock Text="{Binding ErrorText}"
+                               HorizontalAlignment="Center"
+                               FontWeight="ExtraBold"
+                               Foreground="#FF832626"/>
+
+                    <Button Height="50"
+                            Command="{Binding LogInApp}">
+                        <TextBlock Text="Войти"/>
+                    </Button>
+
+                </UniformGrid>
+                
+            </Grid>
+
+            <!--Load-->
+            <Grid Grid.Row="1"
+                  Background="#99000000"
+                  Name="LoadGrid"
+                  Visibility="{Binding LoadVisible}">
+
+                <Image HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       Width="70"
+                       gif:ImageBehavior.AnimatedSource="/Resource/Animated/load4.gif"/>
+
+            </Grid>
+            
+        </Grid>
+        
+    </Grid>
+</Window>
