@@ -1,0 +1,146 @@
+﻿<Page x:Class="DipWACH.View.Pages.AddEmployeePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DipWACH.View.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="835" 
+      d:DesignWidth="1390"
+      Title="AddEmployeePage"
+      Foreground="Black">
+
+    <Page.Resources>
+
+        <Style TargetType="{x:Type TextBox}">
+
+            <Setter Property="Width"
+                    Value="660"/>
+            <Setter Property="Height"
+                    Value="45"/>
+            <Setter Property="FontSize"
+                    Value="17"/>
+            <Setter Property="VerticalContentAlignment"
+                    Value="Center"/>
+
+        </Style>
+
+        <Style TargetType="{x:Type ComboBox}"
+               x:Key="PageComboBox">
+
+            <Setter Property="Width"
+                    Value="660"/>
+            <Setter Property="Height"
+                    Value="45"/>
+            <Setter Property="FontSize"
+                    Value="17"/>
+            <Setter Property="VerticalContentAlignment"
+                    Value="Center"/>
+            <Setter Property="Foreground"
+                    Value="Black"/>
+            <Setter Property="BorderThickness"
+                    Value="1"/>
+            <Setter Property="Background"
+                    Value="DimGray"/>
+            <Setter Property="SnapsToDevicePixels"
+                    Value="True"/>
+
+        </Style>
+
+
+    </Page.Resources>
+
+    <Grid Background="Transparent">
+
+        <Grid Margin="10"
+              Background="White"
+              Width="700">
+            <Grid.Effect>
+                <DropShadowEffect BlurRadius="20"
+                                  ShadowDepth="0"
+                                  Direction="0"
+                                  Opacity="0.5"/>
+            </Grid.Effect>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60"/>
+                <RowDefinition/>
+                <RowDefinition Height="90"/>
+            </Grid.RowDefinitions>
+
+            <Border BorderThickness="0 0 0 1"
+                    BorderBrush="#FF5F5F5F">
+                <TextBlock Text="Регистрация сотрудника"
+                           FontSize="25"
+                           Margin="20 0 0 0"
+                           FontWeight="Black"
+                           Style="{StaticResource DefaultPageTextBlock}"/>
+            </Border>
+
+            <Grid Grid.Row="1"
+                  Margin="20 20 20 10">
+
+                <UniformGrid Rows="6"
+                             Columns="1"
+                             HorizontalAlignment="Center">
+
+                    <StackPanel>
+                        <TextBlock Text="ФИО:*"
+                                   Style="{StaticResource DefaultPageTextBlock}"/>
+                        <TextBox Text="{Binding FIO}"/>
+                    </StackPanel>
+
+                    <StackPanel>
+                        <TextBlock Text="Тип:*"
+                                   Style="{StaticResource DefaultPageTextBlock}"/>
+                        <ComboBox SelectedItem="{Binding Type}"
+                                  ItemsSource="{Binding ComboItems}"
+                                  Style="{StaticResource PageComboBox}">
+                            <ComboBox.Resources>
+                                <Style TargetType="{x:Type TextBlock}">
+                                    <Setter Property="Foreground"
+                                            Value="Black"/>
+                                </Style>
+                            </ComboBox.Resources>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <StackPanel>
+                        <TextBlock Text="Логин:*"
+                                   Style="{StaticResource DefaultPageTextBlock}"/>
+                        <TextBox Text="{Binding Login}"/>
+                    </StackPanel>
+
+                    <StackPanel>
+                        <TextBlock Text="Пароль:*"
+                                   Style="{StaticResource DefaultPageTextBlock}"/>
+                        <TextBox Text="{Binding Password}"/>
+                    </StackPanel>
+
+                </UniformGrid>
+                
+            </Grid>
+
+            <Border Grid.Row="2"
+                    BorderThickness="0 1 0 0"
+                    BorderBrush="#FF5F5F5F">
+
+                <Grid>
+
+                    <Button HorizontalAlignment="Right"
+                            Margin="0 0 20 0"
+                            Height="47"
+                            Width="155"
+                            Command="{Binding Registration}">
+                        <TextBlock Text="Регистрация"/>
+                    </Button>
+
+                </Grid>
+
+            </Border>
+
+        </Grid>
+        
+    </Grid>
+    
+</Page>

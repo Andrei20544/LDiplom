@@ -9,12 +9,8 @@ namespace DipWACH.Helper
 {
     public static class DataCompare
     {
-        private static Dictionary<string, string> _dict;
-
         public static string CompareEmployeeData(string login, string password)
         {
-            _dict = new Dictionary<string, string>();
-
             if (!string.IsNullOrEmpty(login) && !string.IsNullOrEmpty(password))
             {
 
@@ -24,15 +20,17 @@ namespace DipWACH.Helper
                     var employees = from e in model.Employee.AsParallel()
                                     select e;
 
+                    var employeeTypes = from et in model.TypeEmployee
+                                        select et;
+
                     string hashPass = CryptoPass.GetHashPassword(password);
-                    Employee employee = employees.Where(p => p.Login.Equals(login) && p.Password.Equals(hashPass)).FirstOrDefault();
+
+                    Employee employee = employees.Where(p => p.Login.Equals(login) && p.Password.Equals(hashPass)).FirstOrDefault();                 
 
                     if (employee != null)
                     {
-                        //_dict.Add("fio", employee.FIO);
-                        //_dict.Add("flag", "true");
-
-                        return employee.FIO;
+                        TypeEmployee typeEmployee = employeeTypes.Where(p => p.ID == employee.IDTypeEmployee).FirstOrDefault();
+                        return employee.FIO + "-" + typeEmployee.Type;
                     }
                 }
 

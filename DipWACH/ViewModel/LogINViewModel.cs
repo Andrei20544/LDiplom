@@ -82,17 +82,17 @@ namespace DipWACH.ViewModel
                     {
                         _loadWindow.Show();
                         _data = DataCompare.CompareEmployeeData(Login, Password);
-                        _loadWindow.Hide();
+                        _loadWindow.Hide();                     
                     }
 
-                    if (_mainWindow == null)
+                    if (_mainWindow == null && _data != null)
                     {
-                        _mainWindow = MainWindow.GetInstance(_regLog);
+                        _mainWindow = MainWindow.GetInstance(_regLog, _data.Split('-')[1]);
+
+                        LogIN(_mainWindow, _data.Split('-')[0]);
+
+                        Application.Current.MainWindow = _mainWindow;
                     }
-
-                    LogIN(_mainWindow, _data);
-
-                    if (_data != null) Application.Current.MainWindow = _mainWindow;
                 }));
             }
         }
@@ -115,16 +115,11 @@ namespace DipWACH.ViewModel
                 main.FioText.Text = data;
                 main.Show();
 
-                //Application.Current.Dispatcher.Invoke(() =>
-                //{
-                //    win.Close();
-                //});
-                //Application.Current.MainWindow.Close();
                 Application.Current.MainWindow.Hide();
             }
             else
             {
-                ErrorText = "Введите логин и пароль";
+                ErrorText = "Введите логин или пароль";
             }
         }
 

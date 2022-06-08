@@ -21,19 +21,19 @@ namespace DipWACH
     {
         private static MainWindow _instance;
 
-        public static MainWindow GetInstance(RegLogWindow window)
+        public static MainWindow GetInstance(RegLogWindow window, string emplType)
         {
             if (_instance == null)
-                _instance = new MainWindow(window);
+                _instance = new MainWindow(window, emplType);
 
             return _instance;
         }
 
-        public MainWindow(RegLogWindow window)
+        public MainWindow(RegLogWindow window, string emplType)
         {
             InitializeComponent();
 
-            DataContext = new MainViewModel(window);
+            DataContext = new MainViewModel(window, emplType);
 
         }
 

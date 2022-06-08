@@ -50,5 +50,38 @@ namespace DipWACH.Helper
             return null;
 
         }
+
+        public static List<string> GetEmployeeTypes()
+        {
+
+            List<string> types = new List<string>();
+
+            using (ModelBD model = new ModelBD())
+            {
+
+                var emplTypes = from et in model.TypeEmployee
+                                select et;
+
+                if (emplTypes != null)
+                {
+
+                    //types = new string[emplTypes.ToList().Count];
+                    var count = 0;
+
+                    foreach (var item in emplTypes)
+                    {
+                        types.Add(item.ID + "-" + item.Type);
+                        count++;
+                    }
+
+                    return types;
+
+                }
+
+                return null;
+
+            }
+
+        }
     }
 }

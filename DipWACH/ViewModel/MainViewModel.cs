@@ -20,16 +20,22 @@ namespace DipWACH.ViewModel
         public ICollectionView collectionView => _collectionViewSource.View;
 
         private RegLogWindow _regLog;
+        private string _employeeType;
 
         private Page _subscribePage;
         private Page _applicationsPage;
+        private Page _addEmployeePage;
 
-        public MainViewModel(RegLogWindow window)
+        public MainViewModel(RegLogWindow window, string emplType)
         {
             _regLog = window;
+            _employeeType = emplType;
+
+            SetAvatar();
 
             _subscribePage = new View.Pages.SubscribePage();
             _applicationsPage = new View.Pages.ApplicationsPage();
+            _addEmployeePage = new View.Pages.AddEmployeePage();
 
             FrameOpacity = 1;
         }
@@ -59,6 +65,39 @@ namespace DipWACH.ViewModel
             }
         }
 
+        private Visibility _userUniBTNVisibility;
+        public Visibility UserUniBTNVisibility
+        {
+            get => _userUniBTNVisibility;
+            set
+            {
+                _userUniBTNVisibility = value;
+                OnPropertyChanged("UserUniBTNVisibility");
+            }
+        }
+
+        private Visibility _adminUniBTNVisibility;
+        public Visibility AdminUniBTNVisibility
+        {
+            get => _adminUniBTNVisibility;
+            set
+            {
+                _adminUniBTNVisibility = value;
+                OnPropertyChanged("AdminUniBTNVisibility");
+            }
+        }
+
+
+        private string _profileIMG;
+        public string ProfileIMG
+        {
+            get => _profileIMG;
+            set
+            {
+                _profileIMG = value;
+                OnPropertyChanged("ProfileIMG");
+            }
+        }
 
         private double _frameOpacity;
         public double FrameOpacity
@@ -152,6 +191,7 @@ namespace DipWACH.ViewModel
             }
         }
 
+
         //Список абонентов
         private RelayCommand _showSubscribers;
         public RelayCommand ShowSubscribers
@@ -174,6 +214,19 @@ namespace DipWACH.ViewModel
                 return _showApplications ?? (_showApplications = new RelayCommand(obj =>
                 {
                     SlowOpacity(_applicationsPage);
+                }));
+            }
+        }
+
+        //Добавление сотрудников
+        private RelayCommand _addEmployee;
+        public RelayCommand AddEmployee
+        {
+            get
+            {
+                return _addEmployee ?? (_addEmployee = new RelayCommand(obj =>
+                {
+                    SlowOpacity(_addEmployeePage);
                 }));
             }
         }
@@ -258,6 +311,24 @@ namespace DipWACH.ViewModel
                     }
                 });
             }
+        }
+
+        private void SetAvatar()
+        {
+
+            if (_employeeType.Equals("Admin"))
+            {
+                ProfileIMG = @"/Resource/Avatars/admin.png";
+                UserUniBTNVisibility = Visibility.Collapsed;
+                AdminUniBTNVisibility = Visibility.Visible;
+            }
+            else
+            {
+                ProfileIMG = @"/Resource/Avatars/user.png";
+                UserUniBTNVisibility = Visibility.Visible;
+                AdminUniBTNVisibility = Visibility.Collapsed;
+            }
+
         }
 
 

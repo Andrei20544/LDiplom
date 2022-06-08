@@ -90,10 +90,14 @@
     <Compile Include="Model\TypeProperty.cs" />
     <Compile Include="Model\TypeService.cs" />
     <Compile Include="RelayCommand.cs" />
+    <Compile Include="ViewModel\AddEmployeeViewModel.cs" />
     <Compile Include="ViewModel\LogINViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="View\LoadWindow.xaml.cs">
       <DependentUpon>LoadWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Pages\AddEmployeePage.xaml.cs">
+      <DependentUpon>AddEmployeePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Pages\ApplicationsPage.xaml.cs">
       <DependentUpon>ApplicationsPage.xaml</DependentUpon>
@@ -125,6 +129,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\LoadWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Pages\AddEmployeePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -202,6 +210,10 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resource\logoutwhite.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resource\Avatars\admin.png" />
+    <Resource Include="Resource\Avatars\user.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
