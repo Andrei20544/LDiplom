@@ -150,13 +150,16 @@
                                 <TextBlock Text="Заполнить абонентов"/>
                             </Button>
 
+                            <TextBlock Text="{Binding Hash}"/>
+                            <TextBlock Text="{Binding UnHash}"/>
+
                         </UniformGrid>
 
                         <UniformGrid Rows="8"
                                      Columns="1"
                                      Visibility="{Binding AdminUniBTNVisibility}">
 
-                            <Button Command="{Binding AddEmployee}">
+                            <Button Command="{Binding AddEmployee}" Background="#FF3B506E">
                                 <TextBlock Text="Добавить сотрудника"/>
                             </Button>
                             <Button Command="{Binding ShowEmployee}">
@@ -199,6 +202,30 @@
                            VerticalContentAlignment="Center"
                            HorizontalContentAlignment="Center"
                            Margin="5"/>
+
+                    <!--<ListBox Background="Transparent">
+
+                        <ListBox.Template>
+                            <ControlTemplate>
+                                <ScrollViewer>
+                                    <ItemsPresenter/>
+                                </ScrollViewer>
+                            </ControlTemplate>
+                        </ListBox.Template>
+                        
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="1"/>
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        
+                    </ListBox>-->
 
                 </Grid>
 

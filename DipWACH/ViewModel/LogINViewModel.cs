@@ -96,6 +96,7 @@ namespace DipWACH.ViewModel
                 }));
             }
         }
+
         //private void Logg()
         //{
         //    MainWindow main = new MainWindow();

@@ -25,7 +25,7 @@ namespace DipWACH.Helper
 
                     string hashPass = CryptoPass.GetHashPassword(password);
 
-                    Employee employee = employees.Where(p => p.Login.Equals(login) && p.Password.Equals(hashPass)).FirstOrDefault();                 
+                    Employee employee = employees.Where(p => p.Login.Equals(login) && p.Password.Equals(hashPass)).FirstOrDefault();
 
                     if (employee != null)
                     {

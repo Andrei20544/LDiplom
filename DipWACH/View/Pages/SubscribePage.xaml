@@ -55,7 +55,8 @@
         <Grid Grid.Row="2"
               Margin="10">
 
-            <ItemsControl ItemsSource="{Binding collectionView}">
+            <ItemsControl ItemsSource="{Binding collectionView}"
+                          VerticalAlignment="Top">
 
                 <ItemsControl.Template>
                     <ControlTemplate>

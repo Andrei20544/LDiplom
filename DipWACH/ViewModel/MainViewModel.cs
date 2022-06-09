@@ -25,6 +25,7 @@ namespace DipWACH.ViewModel
         private Page _subscribePage;
         private Page _applicationsPage;
         private Page _addEmployeePage;
+        private Page _employeePage;
 
         public MainViewModel(RegLogWindow window, string emplType)
         {
@@ -36,6 +37,7 @@ namespace DipWACH.ViewModel
             _subscribePage = new View.Pages.SubscribePage();
             _applicationsPage = new View.Pages.ApplicationsPage();
             _addEmployeePage = new View.Pages.AddEmployeePage();
+            _employeePage = new View.Pages.EmployeePage(FIO);
 
             FrameOpacity = 1;
         }
@@ -231,6 +233,19 @@ namespace DipWACH.ViewModel
             }
         }
 
+        //Список сотрудников
+        private RelayCommand _showEmployee;
+        public RelayCommand ShowEmployee
+        {
+            get
+            {
+                return _showEmployee ?? (_showEmployee = new RelayCommand(obj =>
+                {
+                    SlowOpacity(_employeePage);
+                }));
+            }
+        }
+
 
         //Get Hash
         private string hash;
@@ -244,6 +259,17 @@ namespace DipWACH.ViewModel
             }
         }
 
+        private string unhash;
+        public string UnHash
+        {
+            get => unhash;
+            set
+            {
+                unhash = value;
+                OnPropertyChanged("Unhash");
+            }
+        }
+
         private RelayCommand getHash;
         public RelayCommand GetHash
         {
@@ -251,6 +277,14 @@ namespace DipWACH.ViewModel
             {
                 return getHash ?? (getHash = new RelayCommand(obj =>
                 {
+                    var password = "123456";
+
+                    var encrPass = CryptoPass.GetEncryptPassword(password);
+
+                    Hash = encrPass;
+
+                    UnHash = CryptoPass.GetDecryptPassword(encrPass);
+
                     //FillSubData fillSubData = new FillSubData();
                     //fillSubData.Fill(30);
                 }));

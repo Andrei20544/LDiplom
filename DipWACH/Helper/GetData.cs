@@ -12,6 +12,9 @@ namespace DipWACH.Helper
         private static List<NewSubscriber> _subscribers;
         private static NewSubscriber _newSubscriber;
 
+        private static List<NewEmployee> _employees;
+        private static NewEmployee _newEmployee;
+
         public static List<NewSubscriber> GetSubscribers()
         {
             _subscribers = new List<NewSubscriber>();
@@ -81,6 +84,56 @@ namespace DipWACH.Helper
                 return null;
 
             }
+
+        }
+
+        public static List<NewEmployee> GetEmployees()
+        {
+
+            _employees = new List<NewEmployee>();
+
+            using (ModelBD model = new ModelBD())
+            {
+
+                var employees = from e in model.Employee
+                                join t in model.TypeEmployee on e.IDTypeEmployee equals t.ID
+                                select new
+                                {
+                                    ID = e.ID,
+                                    FIO = e.FIO,
+                                    Login = e.Login,
+                                    Password = e.Password,
+                                    Type = t.Type
+                                };
+
+                if (employees != null)
+                {
+
+                    foreach (var item in employees)
+                    {
+
+                        _newEmployee = new NewEmployee
+                        {
+                            ID = item.ID,
+                            Name = item.FIO.Split(' ')[1].Split(' ')[0],
+                            Sername = item.FIO.Split(' ')[0],
+                            MiddleName = item.FIO.Split(' ')[2],
+                            Login = item.Login,
+                            Password = item.Password,
+                            Type = item.Type
+                        };
+
+                        _employees.Add(_newEmployee);
+
+                    }
+
+                    return _employees;
+
+                }
+
+            }
+
+            return null;
 
         }
     }

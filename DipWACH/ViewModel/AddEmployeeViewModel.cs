@@ -15,19 +15,22 @@ namespace DipWACH.ViewModel
 {
     class AddEmployeeViewModel : INotifyPropertyChanged
     {
+        private ObservableCollection<NewEmployee> _employeeCollection = new ObservableCollection<NewEmployee>();
+
+        private CollectionViewSource _collectionViewSource;
+        public ICollectionView collectionView => _collectionViewSource.View;
+
+        private string _fIO;
+
         public AddEmployeeViewModel()
         {
-            ComboItems = new ObservableCollection<string>();
+            SetComboBox();
+        }
 
-            List<string>  _types = GetData.GetEmployeeTypes();
-
-            if (_types != null)
-            {
-                foreach (var type in _types)
-                {
-                    ComboItems.Add(type);
-                }
-            }
+        public AddEmployeeViewModel(List<NewEmployee> employees, string fio)
+        {
+            InicializeEmployee(employees);
+            _fIO = fio;
         }
 
         private string _fio;
@@ -74,6 +77,17 @@ namespace DipWACH.ViewModel
             }
         }
 
+        private NewEmployee _selectedEmployee;
+        public NewEmployee SelectedEmployee
+        {
+            get => _selectedEmployee;
+            set
+            {
+                _selectedEmployee = value;
+                OnPropertyChanged("SelectedEmployee");
+            }
+        }
+
 
         private ObservableCollection<string> _comboItems;
         public ObservableCollection<string> ComboItems
@@ -113,6 +127,7 @@ namespace DipWACH.ViewModel
                                 model.SaveChanges();
 
                                 PropClear();
+                                UpdateEmployeeCollection();
                             }
                             else
                             {
@@ -131,6 +146,57 @@ namespace DipWACH.ViewModel
             }
         }
 
+        private RelayCommand _deleteEmployee;
+        public RelayCommand DeleteEmployee
+        {
+            get
+            {
+                return _deleteEmployee ?? (_deleteEmployee = new RelayCommand(obj =>
+                {
+
+                    if (SelectedEmployee != null)
+                    {
+                        using (ModelBD model = new ModelBD())
+                        {
+
+                            Employee employee = model.Employee.Where(p => p.ID == SelectedEmployee.ID).FirstOrDefault();
+
+                            if (!employee.FIO.Equals(_fIO))
+                            {
+                                model.Employee.Remove(employee);
+                                model.SaveChanges();
+
+                                UpdateEmployeeCollection();
+
+                                MessageBox.Show($"Пользователь '{employee.FIO}' удален");
+                            }
+                            else
+                            {
+                                MessageBox.Show($"Невозможно удалить пользователя!");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Что-то пошло не так");
+                    }
+
+                }));
+            }
+        }
+
+        private RelayCommand _changeEmployee;
+        public RelayCommand ChangeEmployee
+        {
+            get
+            {
+                return _changeEmployee ?? (_changeEmployee = new RelayCommand(obj =>
+                {
+                    MessageBox.Show("Упс!!");
+                }));
+            }
+        }
+
         private void PropClear()
         {
 
@@ -139,6 +205,44 @@ namespace DipWACH.ViewModel
             Login = "";
             Password = "";
 
+        }
+
+        private void SetComboBox()
+        {
+
+            ComboItems = new ObservableCollection<string>();
+
+            List<string> _types = GetData.GetEmployeeTypes();
+
+            if (_types != null)
+            {
+                foreach (var type in _types)
+                {
+                    ComboItems.Add(type);
+                }
+            }
+
+        }
+
+        private void InicializeEmployee(List<NewEmployee> employees)
+        {
+            foreach (var sub in employees) _employeeCollection.Add(sub);
+
+            _collectionViewSource = new CollectionViewSource { Source = _employeeCollection };
+        }
+
+        private void UpdateEmployeeCollection()
+        {
+            var employees = GetData.GetEmployees();
+
+            _employeeCollection.Clear();
+            _collectionViewSource = null;
+
+            foreach (var sub in employees) _employeeCollection.Add(sub);
+
+            _collectionViewSource = new CollectionViewSource { Source = _employeeCollection };
+
+            _collectionViewSource.View.Refresh();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
