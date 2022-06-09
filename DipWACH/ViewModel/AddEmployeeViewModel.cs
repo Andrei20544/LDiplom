@@ -1,5 +1,6 @@
 ﻿using DipWACH.Helper;
 using DipWACH.Model;
+using DipWACH.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,17 +21,32 @@ namespace DipWACH.ViewModel
         private CollectionViewSource _collectionViewSource;
         public ICollectionView collectionView => _collectionViewSource.View;
 
+        private DipDialog _dipDialog;
+
         private string _fIO;
 
         public AddEmployeeViewModel()
         {
             SetComboBox();
+            VisibleGrid = Visibility.Collapsed;
         }
 
         public AddEmployeeViewModel(List<NewEmployee> employees, string fio)
         {
             InicializeEmployee(employees);
             _fIO = fio;
+            VisibleGrid = Visibility.Collapsed;
+        }
+
+        private Visibility _visibleGrid;
+        public Visibility VisibleGrid
+        {
+            get => _visibleGrid;
+            set
+            {
+                _visibleGrid = value;
+                OnPropertyChanged("VisibleGrid");
+            }
         }
 
         private string _fio;
@@ -76,6 +92,18 @@ namespace DipWACH.ViewModel
                 OnPropertyChanged("Password");
             }
         }
+
+        private string _changePasswordTextBox;
+        public string ChangePasswordTextBox
+        {
+            get => _changePasswordTextBox;
+            set
+            {
+                _changePasswordTextBox = value;
+                OnPropertyChanged("ChangePasswordTextBox");
+            }
+        }
+
 
         private NewEmployee _selectedEmployee;
         public NewEmployee SelectedEmployee
@@ -178,7 +206,7 @@ namespace DipWACH.ViewModel
                     }
                     else
                     {
-                        MessageBox.Show($"Что-то пошло не так");
+                        MessageBox.Show($"Пользователь не выбран!");
                     }
 
                 }));
@@ -192,9 +220,95 @@ namespace DipWACH.ViewModel
             {
                 return _changeEmployee ?? (_changeEmployee = new RelayCommand(obj =>
                 {
-                    MessageBox.Show("Упс!!");
+                    if (SelectedEmployee != null)
+                    {
+                        //using (ModelBD model = new ModelBD())
+                        //{
+                        //    _dipDialog = null;
+                        //    _dipDialog = new DipDialog();
+
+                        //    if (_dipDialog.ShowDialog() == true)
+                        //    {
+                        //        if (!string.IsNullOrEmpty(_dipDialog.Password))
+                        //        {
+
+                        //            Employee employee = model.Employee.Where(p => p.ID == SelectedEmployee.ID).FirstOrDefault();
+                        //            employee.Password = CryptoPass.GetHashPassword(_dipDialog.Password);
+
+                        //            model.Entry(employee).State = System.Data.Entity.EntityState.Modified;
+                        //            model.SaveChanges();
+
+                        //            MessageBox.Show($"Пароль для пользователя {employee.FIO} изменен");
+
+                        //            UpdateEmployeeCollection();
+
+                        //        }
+                        //    }
+
+                        //}
+                        ChangePassGridVisible(Visibility.Visible);
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Пользователь не выбран!");
+                    }
                 }));
             }
+        }
+
+        private RelayCommand _acceptBTN;
+        public RelayCommand AcceptBTN
+        {
+            get
+            {
+                return _acceptBTN ?? (_acceptBTN = new RelayCommand(obj =>
+                {
+                    if (SelectedEmployee != null)
+                    {
+                        using (ModelBD model = new ModelBD())
+                        {
+                            if (!string.IsNullOrEmpty(ChangePasswordTextBox))
+                            {
+
+                                Employee employee = model.Employee.Where(p => p.ID == SelectedEmployee.ID).FirstOrDefault();
+                                employee.Password = CryptoPass.GetHashPassword(ChangePasswordTextBox);
+
+                                model.Entry(employee).State = System.Data.Entity.EntityState.Modified;
+                                model.SaveChanges();
+
+                                VisibleGrid = Visibility.Collapsed;
+                                
+                                MessageBox.Show($"Пароль для пользователя {employee.FIO} изменен");
+
+                                UpdateEmployeeCollection();
+                            }
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Пользователь не выбран!");
+                    }
+                }));
+            }
+        }
+
+        private RelayCommand _cancelBTN;
+        public RelayCommand CancelBTN
+        {
+            get
+            {
+                return _cancelBTN ?? (_cancelBTN = new RelayCommand(obj =>
+                {
+                    ChangePassGridVisible(Visibility.Collapsed);
+                }));
+            }
+        }
+
+
+        private void ChangePassGridVisible(Visibility visibility)
+        {
+            ChangePasswordTextBox = "";
+            VisibleGrid = visibility;
         }
 
         private void PropClear()

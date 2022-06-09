@@ -21,20 +21,19 @@ namespace DipWACH
     {
         private static MainWindow _instance;
 
-        public static MainWindow GetInstance(RegLogWindow window, string emplType)
+        public static MainWindow GetInstance(RegLogWindow window, string emplData)
         {
             if (_instance == null)
-                _instance = new MainWindow(window, emplType);
+                _instance = new MainWindow(window, emplData);
 
             return _instance;
         }
 
-        public MainWindow(RegLogWindow window, string emplType)
+        public MainWindow(RegLogWindow window, string emplData)
         {
             InitializeComponent();
 
-            DataContext = new MainViewModel(window, emplType);
-
+            DataContext = new MainViewModel(window, emplData);
         }
 
         private void Window_MouseLeftButtonDown(object sender, MouseButtonEventArgs e) => this.DragMove();

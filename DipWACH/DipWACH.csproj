@@ -94,6 +94,9 @@
     <Compile Include="ViewModel\AddEmployeeViewModel.cs" />
     <Compile Include="ViewModel\LogINViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="View\DipDialog.xaml.cs">
+      <DependentUpon>DipDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\LoadWindow.xaml.cs">
       <DependentUpon>LoadWindow.xaml</DependentUpon>
     </Compile>
@@ -129,6 +132,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Style\MainStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\DipDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

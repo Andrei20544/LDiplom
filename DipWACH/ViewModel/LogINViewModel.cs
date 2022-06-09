@@ -77,21 +77,26 @@ namespace DipWACH.ViewModel
             get
             {
                 return _logInApp ?? (_logInApp = new RelayCommand(obj =>
-                {                 
-                    if (_data == null)
-                    {
-                        _loadWindow.Show();
-                        _data = DataCompare.CompareEmployeeData(Login, Password);
-                        _loadWindow.Hide();                     
-                    }
+                {
+                    Application.Current.MainWindow = _regLog;
+                    _mainWindow = null;
 
-                    if (_mainWindow == null && _data != null)
+                    _loadWindow.Show();
+                    _data = DataCompare.CompareEmployeeData(Login, Password);
+                    _loadWindow.Hide();
+
+                    if (_data != null)
                     {
-                        _mainWindow = MainWindow.GetInstance(_regLog, _data.Split('-')[1]);
+                        //_mainWindow = MainWindow.GetInstance(_regLog, _data);
+                        _mainWindow = new MainWindow(_regLog, _data);
 
                         LogIN(_mainWindow, _data.Split('-')[0]);
 
                         Application.Current.MainWindow = _mainWindow;
+                    }
+                    else
+                    {
+                        ErrorText = "Неверные логин или пароль";
                     }
                 }));
             }
@@ -109,19 +114,13 @@ namespace DipWACH.ViewModel
         //}
         private void LogIN(MainWindow main, string data)
         {
-            if (data != null)
-            {
-                ErrorText = "";
+            ErrorText = "";
 
-                main.FioText.Text = data;
-                main.Show();
+            //main.FioText.Text = data;
+            main.Show();
 
-                Application.Current.MainWindow.Hide();
-            }
-            else
-            {
-                ErrorText = "Введите логин или пароль";
-            }
+            Application.Current.MainWindow.Hide();
+
         }
 
         //Закрытие приложения

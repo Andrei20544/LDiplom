@@ -27,10 +27,11 @@ namespace DipWACH.ViewModel
         private Page _addEmployeePage;
         private Page _employeePage;
 
-        public MainViewModel(RegLogWindow window, string emplType)
+        public MainViewModel(RegLogWindow window, string emplData)
         {
             _regLog = window;
-            _employeeType = emplType;
+            _employeeType = emplData.Split('-')[1];
+            FIO = emplData.Split('-')[0];
 
             SetAvatar();
 
@@ -188,7 +189,7 @@ namespace DipWACH.ViewModel
                         _regLog.Show();
                     }
 
-                    Application.Current.MainWindow.Hide();
+                    Application.Current.MainWindow.Close();
                 }));
             }
         }

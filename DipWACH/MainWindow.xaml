@@ -200,8 +200,7 @@
                            NavigationUIVisibility="Hidden"
                            Opacity="{Binding FrameOpacity}"
                            VerticalContentAlignment="Center"
-                           HorizontalContentAlignment="Center"
-                           Margin="5"/>
+                           HorizontalContentAlignment="Center"/>
 
                     <!--<ListBox Background="Transparent">
 

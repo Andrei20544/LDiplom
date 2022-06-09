@@ -1,0 +1,92 @@
+﻿<Window x:Class="DipWACH.View.DipDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DipWACH.View"
+        mc:Ignorable="d"
+        Title="DipDialog" 
+        Height="190" 
+        Width="320"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        ResizeMode="CanResize"
+        Background="Transparent"
+        AllowsTransparency="True">
+
+    <Grid>
+
+        <Border CornerRadius="5"
+                Margin="5">
+            <Border.Background>
+                <ImageBrush ImageSource="/DipWACH;component/Resource/fonV.jpg"/>
+            </Border.Background>
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="15"
+                                  ShadowDepth="0"
+                                  Direction="0"
+                                  Opacity="0.5"
+                                  RenderingBias="Quality"/>
+            </Border.Effect>
+
+            <Grid>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0"
+                      Background="#FF212C36">
+
+                    <TextBlock Text="Смена пароля"
+                               Margin="10 0 0 0"/>
+
+                </Grid>
+
+                <Grid Grid.Row="1"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center">
+
+                    <Grid>
+
+                        <TextBox Margin="0 5 0 0"
+                                 Name="DipDialogTextBox"
+                                 Style="{StaticResource MainTextBox}"/>
+                        <TextBlock Text="Пароль"
+                                   Style="{StaticResource UnderBoxTextBlockDipWin}"/>
+
+                    </Grid>
+                    
+                </Grid>
+
+                <Grid Grid.Row="2">
+
+                    <UniformGrid Columns="2"
+                                 Rows="1">
+
+                        <Button Margin="0"
+                                Height="30"
+                                Width="145" 
+                                Click="Cancel_Click">
+                            <TextBlock Text="Отмена"/>
+                        </Button>
+                        <Button Margin="0"
+                                Height="30"
+                                Width="145" 
+                                Click="Accept_Click">
+                            <TextBlock Text="ОК"/>
+                        </Button>
+
+                    </UniformGrid>
+                    
+                </Grid>
+
+            </Grid>
+
+        </Border>
+
+    </Grid>
+
+</Window>

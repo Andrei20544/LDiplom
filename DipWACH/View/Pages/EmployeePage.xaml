@@ -15,7 +15,7 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="58"/>
             <RowDefinition/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
         <TextBlock Text="Пользователи"
@@ -384,7 +384,7 @@
             <Border Grid.Row="2"
                     Grid.ColumnSpan="2"
                     Background="Transparent"
-                    Margin="0"
+                    Margin="0 0 0 5"
                     Style="{StaticResource PageBorder}">
 
                 <Grid VerticalAlignment="Center">
@@ -393,10 +393,10 @@
                                 HorizontalAlignment="Right">
 
                         <Button Height="30"
-                                Width="100"
+                                Width="150"
                                 Margin="0 0 10 0"
                                 Command="{Binding ChangeEmployee}">
-                            <TextBlock Text="Изменить"
+                            <TextBlock Text="Изменить пароль"
                                        FontSize="16"/>
                         </Button>
 
@@ -408,6 +408,86 @@
                         </Button>
 
                     </StackPanel>
+
+                </Grid>
+
+            </Border>
+
+        </Grid>
+
+        <Grid Grid.RowSpan="4"
+              Background="#B21F1F1F"
+              Visibility="{Binding VisibleGrid}">
+
+            <Border CornerRadius="5"
+                    Margin="5"
+                    Height="190"
+                    Width="320">
+                <Border.Background>
+                    <ImageBrush ImageSource="/DipWACH;component/Resource/fonV.jpg"/>
+                </Border.Background>
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="15"
+                                      ShadowDepth="0"
+                                      Direction="0"
+                                      Opacity="0.5"
+                                      RenderingBias="Quality"/>
+                </Border.Effect>
+
+                <Grid>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0"
+                          Background="#FF212C36">
+
+                        <TextBlock Text="Смена пароля"
+                                   Margin="10 0 0 0"/>
+
+                    </Grid>
+
+                    <Grid Grid.Row="1"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center">
+
+                        <Grid>
+
+                            <TextBox Margin="0 5 0 0"
+                                     Name="DipDialogTextBox"
+                                     Style="{StaticResource MainTextBox}"
+                                     Text="{Binding ChangePasswordTextBox}"/>
+                            <TextBlock Text="Пароль"
+                                       Style="{StaticResource UnderBoxTextBlockDipWin}"/>
+
+                        </Grid>
+
+                    </Grid>
+
+                    <Grid Grid.Row="2">
+
+                        <UniformGrid Columns="2"
+                                     Rows="1">
+
+                            <Button Margin="0"
+                                    Height="30"
+                                    Width="145"
+                                    Command="{Binding CancelBTN}">
+                                <TextBlock Text="Отмена"/>
+                            </Button>
+                            <Button Margin="0"
+                                    Height="30"
+                                    Width="145"
+                                    Command="{Binding AcceptBTN}">
+                                <TextBlock Text="ОК"/>
+                            </Button>
+
+                        </UniformGrid>
+
+                    </Grid>
 
                 </Grid>
 

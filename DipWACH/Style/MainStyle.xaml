@@ -241,6 +241,24 @@
 
     </Style>
 
+    <Style TargetType="{x:Type TextBlock}"
+           BasedOn="{StaticResource UnderBoxTextBlock}"
+           x:Key="UnderBoxTextBlockDipWin">
+
+        <Style.Triggers>
+
+            <DataTrigger Binding="{Binding Text, ElementName=DipDialogTextBox}"
+                         Value="">
+
+                <Setter Property="Visibility"
+                        Value="Visible"/>
+
+            </DataTrigger>
+
+        </Style.Triggers>
+
+    </Style>
+
     <!--/CustomTextBox-->
     
     
@@ -646,7 +664,7 @@
 
                             <Setter TargetName="Border"
                                     Property="BorderThickness"
-                                    Value="2 0 0 0"/>
+                                    Value="3 0 0 0"/>
                             <Setter TargetName="Border"
                                     Property="BorderBrush"
                                     Value="#FF344861"/>
