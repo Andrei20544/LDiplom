@@ -1,4 +1,4 @@
-﻿<Page x:Class="DipWACH.View.Pages.ApplicationsPage"
+﻿<Page x:Class="DipWACH.View.Pages.DebtsPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -7,20 +7,20 @@
       mc:Ignorable="d" 
       d:DesignHeight="830" 
       d:DesignWidth="1390"
-      Title="ApplicationsPage">
+      Title="DebtsPage">
 
     <Grid>
 
-        <TextBlock Text="Applications"
+        <TextBlock Text="Debts"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
                    FontSize="30">
             <TextBlock.Effect>
                 <DropShadowEffect BlurRadius="15"
-                                      ShadowDepth="0"
-                                      Direction="0"
-                                      Opacity="0.7"
-                                      RenderingBias="Quality"/>
+                                  ShadowDepth="0"
+                                  Direction="0"
+                                  Opacity="0.7"
+                                  RenderingBias="Quality"/>
             </TextBlock.Effect>
         </TextBlock>
 

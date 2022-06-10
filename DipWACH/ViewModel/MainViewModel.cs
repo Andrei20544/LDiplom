@@ -16,6 +16,9 @@ namespace DipWACH.ViewModel
 {
     public class MainViewModel : INotifyPropertyChanged
     {
+        private ObservableCollection<NewSubscriber> _subCollectionFull;
+        private ObservableCollection<NewSubscriber> _subCollection;
+
         private CollectionViewSource _collectionViewSource;
         public ICollectionView collectionView => _collectionViewSource.View;
 
@@ -26,6 +29,7 @@ namespace DipWACH.ViewModel
         private Page _applicationsPage;
         private Page _addEmployeePage;
         private Page _employeePage;
+        private Page _debtsPage;
 
         public MainViewModel(RegLogWindow window, string emplData)
         {
@@ -39,18 +43,35 @@ namespace DipWACH.ViewModel
             _applicationsPage = new View.Pages.ApplicationsPage();
             _addEmployeePage = new View.Pages.AddEmployeePage();
             _employeePage = new View.Pages.EmployeePage(FIO);
+            _debtsPage = new View.Pages.DebtsPage();
 
             FrameOpacity = 1;
         }
 
         public MainViewModel(List<NewSubscriber> subscribers)
         {
-            ObservableCollection<NewSubscriber> SubCollection = new ObservableCollection<NewSubscriber>();
+            InicializeCollection(subscribers);
+            //NextPage();
+        }
 
-            foreach (var sub in subscribers) SubCollection.Add(sub);
+        private void InicializeCollection(List<NewSubscriber> subscribers)
+        {
 
-            _collectionViewSource = new CollectionViewSource { Source = SubCollection };
+            _subCollectionFull = new ObservableCollection<NewSubscriber>();
+
+            foreach (var sub in subscribers) _subCollectionFull.Add(sub);
+
+            _collectionViewSource = new CollectionViewSource { Source = _subCollectionFull };
             _collectionViewSource.Filter += Items_Filter;
+
+        }
+
+        private void NextPage()
+        {
+
+            _subCollection = (ObservableCollection<NewSubscriber>)_subCollectionFull.Skip(0).Take(3);
+
+            _collectionViewSource = new CollectionViewSource { Source = _subCollection };
 
         }
 
@@ -217,6 +238,19 @@ namespace DipWACH.ViewModel
                 return _showApplications ?? (_showApplications = new RelayCommand(obj =>
                 {
                     SlowOpacity(_applicationsPage);
+                }));
+            }
+        }
+
+        //Задолженности
+        private RelayCommand _showDebts;
+        public RelayCommand ShowDebts
+        {
+            get
+            {
+                return _showDebts ?? (_showDebts = new RelayCommand(obj =>
+                {
+                    SlowOpacity(_debtsPage);
                 }));
             }
         }

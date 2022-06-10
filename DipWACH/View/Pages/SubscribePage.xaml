@@ -15,6 +15,7 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="58"/>
             <RowDefinition/>
+            <RowDefinition Height="45"/>
         </Grid.RowDefinitions>
 
         <TextBlock Text="Абоненты"
@@ -74,6 +75,14 @@
                               Width="1200"
                               Height="100"
                               Margin="0 0 0 8">
+
+                            <!--<Grid.Effect>
+                                <DropShadowEffect BlurRadius="15"
+                                      ShadowDepth="0"
+                                      Direction="0"
+                                      Opacity="0.7"
+                                      RenderingBias="Performance"/>
+                            </Grid.Effect>-->
 
                             <Border CornerRadius="8"
                                     Background="AliceBlue">
@@ -185,6 +194,12 @@
                 
             </ItemsControl>
 
+        </Grid>
+
+        <Grid Grid.Row="3">
+            
+            
+            
         </Grid>
 
     </Grid>

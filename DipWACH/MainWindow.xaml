@@ -133,8 +133,8 @@
                                      Columns="1"
                                      Visibility="{Binding UserUniBTNVisibility}">
 
-                            <Button>
-                                <TextBlock Text="Задолжности"/>
+                            <Button Command="{Binding ShowDebts}">
+                                <TextBlock Text="Задолженности"/>
                             </Button>
                             <Button Command="{Binding ShowApplications}">
                                 <TextBlock Text="Заявки"/>
@@ -177,8 +177,6 @@
                         <Button Style="{StaticResource LogOutBTN}"
                                 Command="{Binding LogOutApp}"
                                 HorizontalAlignment="Left">
-                            <!--<TextBlock Text="Выйти"
-                                       FontSize="16"/>-->
                             <Image Source="/Resource/logoutwhite.png"
                                    Opacity="0.5"/>
                         </Button>
@@ -189,42 +187,11 @@
 
                 <Grid Grid.Column="1">
 
-                    <!--<TextBlock Text="{Binding Hash, UpdateSourceTrigger=PropertyChanged}"
-                               HorizontalAlignment="Center"
-                               FontSize="35"/>-->
-
-                    <!--<TextBox Text="{Binding Hash, UpdateSourceTrigger=PropertyChanged}"/>-->
-
-
                     <Frame Content="{Binding CurrentPage}"
                            NavigationUIVisibility="Hidden"
                            Opacity="{Binding FrameOpacity}"
                            VerticalContentAlignment="Center"
                            HorizontalContentAlignment="Center"/>
-
-                    <!--<ListBox Background="Transparent">
-
-                        <ListBox.Template>
-                            <ControlTemplate>
-                                <ScrollViewer>
-                                    <ItemsPresenter/>
-                                </ScrollViewer>
-                            </ControlTemplate>
-                        </ListBox.Template>
-                        
-                        <ListBox.ItemTemplate>
-                            <DataTemplate>
-                                
-                            </DataTemplate>
-                        </ListBox.ItemTemplate>
-
-                        <ListBox.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <UniformGrid Columns="1"/>
-                            </ItemsPanelTemplate>
-                        </ListBox.ItemsPanel>
-                        
-                    </ListBox>-->
 
                 </Grid>
 
