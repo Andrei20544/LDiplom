@@ -8,16 +8,11 @@ namespace DipWACH.View.Pages
 {
     public partial class SubscribePage : Page
     {
-        private List<NewSubscriber> _subscribers;
-
         public SubscribePage()
         {
             InitializeComponent();
 
-            _subscribers = GetData.GetSubscribers();
-
-            DataContext = new MainViewModel(_subscribers);
-
+            DataContext = new CalculateViewModel();
         }
     }
 }

@@ -6,17 +6,23 @@ namespace DipWACH.Model
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("Rate")]
-    public partial class Rate
+    [Table("Apartment")]
+    public partial class Apartment
     {
         public int ID { get; set; }
+
+        public int? Number { get; set; }
+
+        public int QtyPeople { get; set; }
 
         public DateTime PeriodStart { get; set; }
 
         public DateTime PeriodEnd { get; set; }
 
-        public double? PriceWInto { get; set; }
+        public double? WMeter { get; set; }
 
-        public double? PriceWOut { get; set; }
+        public int IDBuilding { get; set; }
+
+        public bool? IsWMeter { get; set; }
     }
 }

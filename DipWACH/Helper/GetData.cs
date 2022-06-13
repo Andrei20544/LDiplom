@@ -9,20 +9,23 @@ namespace DipWACH.Helper
 {
     public static class GetData
     {
-        private static List<NewSubscriber> _subscribers;
-        private static NewSubscriber _newSubscriber;
+        private static List<Region> _regions;
+        private static Region _region;
 
         private static List<NewEmployee> _employees;
         private static NewEmployee _newEmployee;
 
-        public static List<NewSubscriber> GetSubscribers()
+        private static List<NewRegion> _newRegions;
+        private static NewRegion _newRegion;
+
+        public static List<Region> GetRegions()
         {
-            _subscribers = new List<NewSubscriber>();
+            _regions = new List<Region>();
 
             using (ModelBD model = new ModelBD())
             {
 
-                var subscribers = from s in model.Subscriber
+                var subscribers = from s in model.Region
                                   select s;
 
                 if (subscribers != null)
@@ -31,26 +34,88 @@ namespace DipWACH.Helper
                     foreach (var item in subscribers)
                     {
 
-                        _newSubscriber = new NewSubscriber
+                        _region = new Region
                         {
-                            Name = item.FIO.Split(' ')[1].Split(' ')[0],
-                            Sername = item.FIO.Split(' ')[0],
-                            Serial = item.PassportData.Split(' ')[0],
-                            Number = item.PassportData.Split(' ')[1],
-                            INN = item.INN
+                            Name = item.Name,
+                            Settlements = item.Settlements
                         };
 
-                        _subscribers.Add(_newSubscriber);
+                        _regions.Add(_region);
 
                     }
 
-                    return _subscribers;
+                    return _regions;
 
                 }
 
             }
 
             return null;
+
+        }
+
+        public static List<NewRegion> GetNewRegion()
+        {
+
+            try
+            {
+                _newRegions = new List<NewRegion>();
+
+                using (ModelBD model = new ModelBD())
+                {
+
+                    var regions = from r in model.Region
+                                  select r;
+
+                    var qtyPrivateBuilding = from r in model.Region
+                                             join b in model.Building on r.ID equals b.IDRegion
+                                             where b.IsPrivate == true
+                                             select new
+                                             {
+                                                 IDRegion = r.ID
+                                             };
+
+                    var qtyBuilding = from r in model.Region
+                                      join b in model.Building on r.ID equals b.IDRegion
+                                      select new
+                                      {
+                                          IDRegion = r.ID
+                                      };
+
+                    var qtyApartment = from r in model.Region
+                                       join b in model.Building on r.ID equals b.IDRegion
+                                       join a in model.Apartment on b.ID equals a.IDBuilding
+                                       where b.IsPrivate == false
+                                       select new
+                                       {
+                                           IDRegion = r.ID
+                                       };
+
+                    foreach (var region in regions.ToList())
+                    {
+
+                        _newRegion = new NewRegion
+                        {
+                            IDRegion = region.ID,
+                            Region = region.Name,
+                            Settlements = region.Settlements,
+                            QtyPrivateBuilding = qtyPrivateBuilding.Where(p => p.IDRegion == region.ID).ToList().Count,
+                            QtyBuilding = qtyBuilding.Where(p => p.IDRegion == region.ID).ToList().Count,
+                            QtyApartment = qtyApartment.Where(p => p.IDRegion == region.ID).ToList().Count
+                        };
+
+                        _newRegions.Add(_newRegion);
+
+                    }
+
+                    return _newRegions;
+
+                }
+            }
+            catch
+            {
+                return null;
+            }
 
         }
 
@@ -134,6 +199,78 @@ namespace DipWACH.Helper
             }
 
             return null;
+
+        }
+
+        public static List<NewRate> GetRate()
+        {
+            List<NewRate> newRates = new List<NewRate>();
+
+            using (ModelBD model = new ModelBD())
+            {
+
+                var rates = from r in model.Rate
+                           join reg in model.Region on r.ID equals reg.IDRate
+                           join b in model.Building on reg.ID equals b.IDRegion
+                           select new
+                           {
+                               IDBuilding = b.ID,
+                               RateWInto = r.PriceWInto,
+                               RateWOut = r.PriceWOut
+                           };
+                
+                foreach (var item in rates)
+                {
+
+                    NewRate newRate = new NewRate
+                    {
+                        IDBuilding = item.IDBuilding,
+                        RateWInto = item.RateWInto,
+                        RateWOut = item.RateWOut
+                    };
+
+                    newRates.Add(newRate);
+
+                }
+
+                return newRates;
+
+            }
+
+        }
+
+        public static List<Apartment> GetApartments(int idRegion)
+        {
+            using (ModelBD model = new ModelBD())
+            {
+
+                var apartments = from b in model.Building
+                                 join a in model.Apartment on b.ID equals a.IDBuilding
+                                 where b.IDRegion == idRegion
+                                 select a;
+
+                var list = apartments.ToList();
+
+                return list;
+
+            }
+        }
+
+        public static List<Building> GetBuildings(int idRegion)
+        {
+
+            using (ModelBD model = new ModelBD())
+            {
+
+                var apartments = from b in model.Building
+                                 where b.IDRegion == idRegion && b.IsPrivate == true
+                                 select b;
+
+                var list = apartments.ToList();
+
+                return list;
+
+            }
 
         }
     }

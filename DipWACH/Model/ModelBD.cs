@@ -12,15 +12,15 @@ namespace DipWACH.Model
         {
         }
 
+        public virtual DbSet<Apartment> Apartment { get; set; }
+        public virtual DbSet<Building> Building { get; set; }
         public virtual DbSet<CalcOfAccruals> CalcOfAccruals { get; set; }
         public virtual DbSet<Employee> Employee { get; set; }
-        public virtual DbSet<Property> Property { get; set; }
         public virtual DbSet<Rate> Rate { get; set; }
-        public virtual DbSet<Service> Service { get; set; }
-        public virtual DbSet<Subscriber> Subscriber { get; set; }
+        public virtual DbSet<Region> Region { get; set; }
+        public virtual DbSet<TypeBuilding> TypeBuilding { get; set; }
         public virtual DbSet<TypeEmployee> TypeEmployee { get; set; }
-        public virtual DbSet<TypeProperty> TypeProperty { get; set; }
-        public virtual DbSet<TypeService> TypeService { get; set; }
+        public virtual DbSet<TypeRate> TypeRate { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

@@ -6,13 +6,17 @@ namespace DipWACH.Model
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("Service")]
-    public partial class Service
+    [Table("Region")]
+    public partial class Region
     {
         public int ID { get; set; }
 
-        public int IDRate { get; set; }
+        [Required]
+        [StringLength(200)]
+        public string Name { get; set; }
 
-        public int IDTypeService { get; set; }
+        public string Settlements { get; set; }
+
+        public int? IDRate { get; set; }
     }
 }

@@ -61,33 +61,33 @@ namespace DipWACH.Helper
             GetFIO();
             GetPassData();
 
-            using (ModelBD model = new ModelBD())
-            {
+            //using (ModelBD model = new ModelBD())
+            //{
 
-                Subscriber subscriber;
-                _random = new Random();
+            //    Subscriber subscriber;
+            //    _random = new Random();
 
-                if (_fio != null && _passdata != null)
-                {
+            //    if (_fio != null && _passdata != null)
+            //    {
 
-                    for (int i = 0; i < amount; i++)
-                    {
-                        subscriber = new Subscriber
-                        {
-                            FIO = _fio[_random.Next(20)],
-                            IDProperty = 1,
-                            PassportData = _passdata[_random.Next(20)],
-                            INN = _random.Next(11111, 99999).ToString() + _random.Next(111111, 999999).ToString()
-                        };
+            //        for (int i = 0; i < amount; i++)
+            //        {
+            //            subscriber = new Subscriber
+            //            {
+            //                FIO = _fio[_random.Next(20)],
+            //                IDProperty = 1,
+            //                PassportData = _passdata[_random.Next(20)],
+            //                INN = _random.Next(11111, 99999).ToString() + _random.Next(111111, 999999).ToString()
+            //            };
 
-                        model.Subscriber.Add(subscriber);
-                    }
+            //            model.Subscriber.Add(subscriber);
+            //        }
 
-                }
+            //    }
 
-                model.SaveChanges();
+            //    model.SaveChanges();
 
-            }
+            //}
         }
 
     }

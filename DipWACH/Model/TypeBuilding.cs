@@ -6,13 +6,13 @@ namespace DipWACH.Model
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("TypeService")]
-    public partial class TypeService
+    [Table("TypeBuilding")]
+    public partial class TypeBuilding
     {
         public int ID { get; set; }
 
         [Required]
-        [StringLength(100)]
-        public string TypeName { get; set; }
+        [StringLength(150)]
+        public string Name { get; set; }
     }
 }

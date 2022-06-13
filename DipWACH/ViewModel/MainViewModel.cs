@@ -20,7 +20,7 @@ namespace DipWACH.ViewModel
         private ObservableCollection<NewSubscriber> _subCollection;
 
         private CollectionViewSource _collectionViewSource;
-        public ICollectionView collectionView => _collectionViewSource.View;
+        //public ICollectionView collectionView => _collectionViewSource.View;
 
         private RegLogWindow _regLog;
         private string _employeeType;
@@ -48,30 +48,26 @@ namespace DipWACH.ViewModel
             FrameOpacity = 1;
         }
 
-        public MainViewModel(List<NewSubscriber> subscribers)
+        //public MainViewModel(List<NewSubscriber> subscribers)
+        //{
+        //    InicializeCollection(subscribers);
+        //    //NextPage();
+        //}
+
+        public MainViewModel()
         {
-            InicializeCollection(subscribers);
-            //NextPage();
+
         }
 
         private void InicializeCollection(List<NewSubscriber> subscribers)
         {
 
-            _subCollectionFull = new ObservableCollection<NewSubscriber>();
+            //_subCollectionFull = new ObservableCollection<NewSubscriber>();
 
-            foreach (var sub in subscribers) _subCollectionFull.Add(sub);
+            //foreach (var sub in subscribers) _subCollectionFull.Add(sub);
 
-            _collectionViewSource = new CollectionViewSource { Source = _subCollectionFull };
-            _collectionViewSource.Filter += Items_Filter;
-
-        }
-
-        private void NextPage()
-        {
-
-            _subCollection = (ObservableCollection<NewSubscriber>)_subCollectionFull.Skip(0).Take(3);
-
-            _collectionViewSource = new CollectionViewSource { Source = _subCollection };
+            //_collectionViewSource = new CollectionViewSource { Source = _subCollectionFull };
+            //_collectionViewSource.Filter += Items_Filter;
 
         }
 

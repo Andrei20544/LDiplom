@@ -10,8 +10,6 @@ namespace DipWACH.Model
     {
         public int ID { get; set; }
 
-        public int IDService { get; set; }
-
         public int IDEmployee { get; set; }
 
         public int IDSubscriber { get; set; }

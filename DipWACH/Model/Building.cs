@@ -6,23 +6,23 @@ namespace DipWACH.Model
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    [Table("Subscriber")]
-    public partial class Subscriber
+    [Table("Building")]
+    public partial class Building
     {
         public int ID { get; set; }
 
-        public int IDProperty { get; set; }
+        public int? QtyFloor { get; set; }
+
+        public int? QtyApartment { get; set; }
+
+        public int? QtyPeople { get; set; }
 
         [Required]
         [StringLength(255)]
-        public string FIO { get; set; }
+        public string Address { get; set; }
 
-        [Required]
-        [StringLength(11)]
-        public string PassportData { get; set; }
+        public int? IDRegion { get; set; }
 
-        [Required]
-        [StringLength(25)]
-        public string INN { get; set; }
+        public bool? IsPrivate { get; set; }
     }
 }

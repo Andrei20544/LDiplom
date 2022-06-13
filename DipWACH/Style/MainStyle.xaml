@@ -229,7 +229,7 @@
 
         <Style.Triggers>
 
-            <DataTrigger Binding="{Binding Text, ElementName=SearchBox}"
+            <DataTrigger Binding="{Binding Text, ElementName=ComboSearch}"
                          Value="">
 
                 <Setter Property="Visibility"
@@ -298,7 +298,7 @@
         <Setter Property="Foreground"
                 Value="Black"/>
         <Setter Property="Width"
-                Value="110"/>
+                Value="320"/>
 
     </Style>
 

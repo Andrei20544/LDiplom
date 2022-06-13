@@ -15,7 +15,7 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="58"/>
             <RowDefinition/>
-            <RowDefinition Height="45"/>
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
 
         <TextBlock Text="Абоненты"
@@ -35,12 +35,19 @@
 
             <Grid HorizontalAlignment="Center">
               
-                <TextBox Style="{StaticResource MainTextBox}"
+                <!--<TextBox Style="{StaticResource MainTextBox}"
                          Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
                          Width="350"
-                         Name="SearchBox"/>
+                         Name="SearchBox"/>-->
+                <ComboBox Width="350"
+                          Height="50"
+                          Name="ComboSearch"
+                          VerticalContentAlignment="Center"
+                          ItemsSource="{Binding FilterBoxSource}"
+                          SelectedItem="{Binding SelectFilterBox}"
+                          Foreground="Black"/>
                 <TextBlock Style="{StaticResource UnderBoxTextBlockSearch}"
-                           Text="Поиск"/>
+                           Text="Фильтр"/>
 
             </Grid>
 
@@ -56,33 +63,27 @@
         <Grid Grid.Row="2"
               Margin="10">
 
-            <ItemsControl ItemsSource="{Binding collectionView}"
-                          VerticalAlignment="Top">
+            <ListBox Background="Transparent"
+                     ItemsSource="{Binding collectionView}"
+                     Name="MainItems"
+                     VerticalAlignment="Top"
+                     HorizontalAlignment="Center"
+                     SelectedItem="{Binding SelectedRegion, UpdateSourceTrigger=PropertyChanged}">
 
-                <ItemsControl.Template>
+                <!--<ListBox.Template>
                     <ControlTemplate>
-                        <ScrollViewer>
+                        <ScrollViewer x:Name="main">
                             <ItemsPresenter/>
                         </ScrollViewer>
-                    </ControlTemplate>
-                </ItemsControl.Template>
+                </ListBox.Template>-->
 
-                <ItemsControl.ItemTemplate>
+                <ListBox.ItemTemplate>
                     <DataTemplate>
-
                         <Grid HorizontalAlignment="Center"
                               VerticalAlignment="Center"
-                              Width="1200"
-                              Height="100"
-                              Margin="0 0 0 8">
-
-                            <!--<Grid.Effect>
-                                <DropShadowEffect BlurRadius="15"
-                                      ShadowDepth="0"
-                                      Direction="0"
-                                      Opacity="0.7"
-                                      RenderingBias="Performance"/>
-                            </Grid.Effect>-->
+                              Width="900"
+                              Height="180"
+                              Margin="0">
 
                             <Border CornerRadius="8"
                                     Background="AliceBlue">
@@ -92,41 +93,52 @@
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
                                         <ColumnDefinition/>
-                                        <ColumnDefinition/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="28"/>
+                                        <RowDefinition Height="80"/>
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
 
-                                    <TextBlock Text="FIO"
+                                    <Grid Grid.ColumnSpan="2">
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+
+                                        <TextBlock Text="{Binding Region}"
+                                               FontSize="25"
                                                Style="{StaticResource TitlePageTextBlock}"/>
-                                    <TextBlock Text="Passport Data"
-                                               Grid.Column="1"
-                                               Style="{StaticResource TitlePageTextBlock}"/>
-                                    <TextBlock Text="Other"
-                                               Grid.Column="2"
-                                               Style="{StaticResource TitlePageTextBlock}"/>
+                                        <TextBlock Text="{Binding Settlements}"
+                                               Style="{StaticResource TitlePageTextBlock}"
+                                               Grid.Row="1"/>
+
+                                    </Grid>
 
                                     <Border Grid.Row="1"
                                             Style="{StaticResource PageBorder}">
 
-                                        <StackPanel>
+                                        <StackPanel VerticalAlignment="Center">
 
                                             <StackPanel Orientation="Horizontal"
                                                         Style="{StaticResource PageStackPanel}">
-                                                <TextBlock Text="Name: "
+                                                <TextBlock Text="Кол-во частных домов: "
                                                            Style="{StaticResource PageTextBlock}"/>
-                                                <TextBlock Text="{Binding Name}"
-                                                           Style="{StaticResource DefaultPageTextBlock}"/>
+
                                             </StackPanel>
 
                                             <StackPanel Orientation="Horizontal"
                                                         Style="{StaticResource PageStackPanel}">
-                                                <TextBlock Text="Sername: "
+                                                <TextBlock Text="Общее кол-во домов: "
                                                            Style="{StaticResource PageTextBlock}"/>
-                                                <TextBlock Text="{Binding Sername}"
-                                                           Style="{StaticResource DefaultPageTextBlock}"/>
+
+                                            </StackPanel>
+
+                                            <StackPanel Orientation="Horizontal"
+                                                        Style="{StaticResource PageStackPanel}">
+                                                <TextBlock Text="Общее кол-во квартир: "
+                                                           Style="{StaticResource PageTextBlock}"/>
+
                                             </StackPanel>
 
                                         </StackPanel>
@@ -137,41 +149,15 @@
                                             Grid.Column="1"
                                             Style="{StaticResource PageBorder}">
 
-                                        <StackPanel >
+                                        <StackPanel VerticalAlignment="Center"
+                                                    Margin="10 0 0 0">
 
-                                            <StackPanel Orientation="Horizontal"
-                                                        Style="{StaticResource PageStackPanel}">
-                                                <TextBlock Text="Serial: "
-                                                           Style="{StaticResource PageTextBlock}"/>
-                                                <TextBlock Text="{Binding Serial}"
-                                                           Style="{StaticResource DefaultPageTextBlock}"/>
-                                            </StackPanel>
-
-                                            <StackPanel Orientation="Horizontal"
-                                                        Style="{StaticResource PageStackPanel}">
-                                                <TextBlock Text="Number: "
-                                                           Style="{StaticResource PageTextBlock}"/>
-                                                <TextBlock Text="{Binding Number}"
-                                                           Style="{StaticResource DefaultPageTextBlock}"/>
-                                            </StackPanel>
-
-                                        </StackPanel>
-
-                                    </Border>
-
-                                    <Border Grid.Row="1"
-                                            Grid.Column="2"
-                                            Style="{StaticResource PageBorder}">
-
-                                        <StackPanel >
-
-                                            <StackPanel Orientation="Horizontal"
-                                                        Style="{StaticResource PageStackPanel}">
-                                                <TextBlock Text="INN: "
-                                                           Style="{StaticResource PageTextBlock}"/>
-                                                <TextBlock Text="{Binding INN}"
-                                                           Style="{StaticResource DefaultPageTextBlock}"/>
-                                            </StackPanel>
+                                            <TextBlock Text="{Binding QtyPrivateBuilding}"
+                                                       Style="{StaticResource DefaultPageTextBlock}"/>
+                                            <TextBlock Text="{Binding QtyBuilding}"
+                                                       Style="{StaticResource DefaultPageTextBlock}"/>
+                                            <TextBlock Text="{Binding QtyApartment}"
+                                                       Style="{StaticResource DefaultPageTextBlock}"/>
 
                                         </StackPanel>
 
@@ -182,24 +168,212 @@
                             </Border>
 
                         </Grid>
-
                     </DataTemplate>
-                </ItemsControl.ItemTemplate>
+                </ListBox.ItemTemplate>
 
-                <ItemsControl.ItemsPanel>
+                <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <UniformGrid Columns="1"/>
                     </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                
-            </ItemsControl>
+                </ListBox.ItemsPanel>
+
+            </ListBox>
 
         </Grid>
 
+        <!--Footer-->
         <Grid Grid.Row="3">
+
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Margin="0 0 25 0">
+
+                <Button Width="190"
+                        Height="40"
+                        Margin="0 0 15 0"
+                        Command="{Binding AutoCalculate}">
+                    <TextBlock Text="Авторасчет"/>
+                </Button>
+                <Button Width="190"
+                        Height="40"
+                        Command="{Binding Calculate}">
+                    <TextBlock Text="Расчет"/>
+                </Button>
+                
+            </StackPanel>
             
-            
-            
+        </Grid>
+
+        <Grid Grid.RowSpan="4"
+              Background="#99272727"
+              Visibility="{Binding DocVisible}">
+
+            <Grid VerticalAlignment="Center"
+                  HorizontalAlignment="Center">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition Height="60"/>
+                </Grid.RowDefinitions>
+
+                <!--<FlowDocumentScrollViewer Foreground="White"
+                                          HorizontalAlignment="Center"
+                                          Width="1100"
+                                          FontFamily="Times New Roman">
+
+                    <FlowDocument Background="White"
+                                  Foreground="Black"
+                                  Name="document">
+                        <Paragraph FontSize="33"
+                                   TextAlignment="Center"
+                                   FontWeight="Black">Отчет по региону</Paragraph>
+                        <Paragraph FontSize="20"
+                                   TextAlignment="Left">за 30.06.2022</Paragraph>
+                        <Paragraph FontSize="20"
+                                   TextAlignment="Left">
+                            <Run Text="Регион: "/>
+                            <Run Text="{Binding RegionText, UpdateSourceTrigger=PropertyChanged}"/>
+                        </Paragraph>
+                        <Table FontSize="30">
+                            <Table.Columns>
+                                <TableColumn Width="1*" />
+                                <TableColumn Width="1*" />
+                                <TableColumn Width="*" />
+                            </Table.Columns>
+                            <TableRowGroup FontSize="20">
+                                <TableRow FontSize="25"
+                                          FontWeight="DemiBold">
+                                    <TableCell>
+                                        <Paragraph>Сумма по частным домам</Paragraph>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Paragraph>Сумма по квартирам</Paragraph>
+                                    </TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>
+                                        <Paragraph>
+                                            <Run Text="{Binding BuildingSumm}"
+                                                 FontFamily="Times New Roman"/>
+                                            <Run Text="руб."/>
+                                        </Paragraph>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Paragraph>
+                                            <Run Text="{Binding ApartmentSumm}"
+                                                 FontFamily="Times New Roman"/>
+                                            <Run Text="руб."/>
+                                        </Paragraph>
+                                    </TableCell>
+                                </TableRow>
+                            </TableRowGroup>
+                        </Table>
+                        <Paragraph FontSize="25"
+                                   TextAlignment="Right"
+                                   FontWeight="Black">
+                            <Run Text="ИТОГО: "/>
+                            <Run Text="{Binding Itog}"
+                                 FontFamily="Times New Roman"/>
+                            <Run Text="руб."/>
+                        </Paragraph>
+                    </FlowDocument>
+
+                </FlowDocumentScrollViewer>-->
+
+                <FlowDocumentReader Width="1000"
+                                    Height="500"
+                                    Name="DocReader"
+                                    ViewingMode="Scroll">
+
+                    <FlowDocument Background="White"
+                                  Foreground="Black"
+                                  Name="document">
+                        <Paragraph FontSize="33"
+                                   TextAlignment="Center"
+                                   FontWeight="Black">Отчет по региону</Paragraph>
+                        <Paragraph FontSize="20"
+                                   TextAlignment="Left">за 30.06.2022</Paragraph>
+                        <Paragraph FontSize="20"
+                                   TextAlignment="Left">
+                            <Run Text="Регион: "/>
+                            <Run Text="{Binding RegionText, UpdateSourceTrigger=PropertyChanged}"/>
+                        </Paragraph>
+                        <Table FontSize="30">
+                            <Table.Columns>
+                                <TableColumn Width="1*" />
+                                <TableColumn Width="1*" />
+                                <TableColumn Width="*" />
+                            </Table.Columns>
+                            <TableRowGroup FontSize="20">
+                                <TableRow FontSize="25"
+                                          FontWeight="DemiBold">
+                                    <TableCell>
+                                        <Paragraph>Сумма по частным домам</Paragraph>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Paragraph>Сумма по квартирам</Paragraph>
+                                    </TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>
+                                        <Paragraph>
+                                            <Run Text="{Binding BuildingSumm}"
+                                                 FontFamily="Times New Roman"/>
+                                            <Run Text="руб."/>
+                                        </Paragraph>
+                                    </TableCell>
+                                    <TableCell>
+                                        <Paragraph>
+                                            <Run Text="{Binding ApartmentSumm}"
+                                                 FontFamily="Times New Roman"/>
+                                            <Run Text="руб."/>
+                                        </Paragraph>
+                                    </TableCell>
+                                </TableRow>
+                            </TableRowGroup>
+                        </Table>
+                        <Paragraph FontSize="25"
+                                   TextAlignment="Right"
+                                   FontWeight="Black">
+                            <Run Text="ИТОГО: "/>
+                            <Run Text="{Binding Itog}"
+                                 FontFamily="Times New Roman"/>
+                            <Run Text="руб."/>
+                        </Paragraph>
+                    </FlowDocument>
+
+                </FlowDocumentReader>
+                
+
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right"
+                            Grid.Row="1">
+
+                    <StackPanel Orientation="Horizontal"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Margin="0 0 25 0">
+
+                        <Button Width="190"
+                                Height="40"
+                                Margin="0 0 15 0"
+                                Command="{Binding AutoCalculate}"
+                                CommandParameter="{Binding ElementName=DocReader}">
+                            <TextBlock Text="Сохранить в pdf"/>
+                        </Button>
+                        <Button Width="190"
+                                Height="40"
+                                Command="{Binding DocClose}">
+                            <TextBlock Text="Закрыть"/>
+                        </Button>
+
+                    </StackPanel>
+
+                </StackPanel>
+                
+            </Grid>
+
         </Grid>
 
     </Grid>

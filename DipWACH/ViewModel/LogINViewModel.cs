@@ -23,6 +23,10 @@ namespace DipWACH.ViewModel
         {
             _loadWindow = new LoadWindow();
             _regLog = window;
+
+            Login = "Ivan";
+            Password = "123";
+
             LoadVisible = Visibility.Collapsed;
         }
 

@@ -140,18 +140,18 @@
                                 <TextBlock Text="Заявки"/>
                             </Button>
                             <Button Command="{Binding ShowSubscribers}">
-                                <TextBlock Text="Список абонентов"/>
+                                <TextBlock Text="Список Регионов"/>
                             </Button>
                             <Button>
                                 <TextBlock Text="Сформировать отчет"/>
                             </Button>
 
                             <Button Command="{Binding GetHash}">
-                                <TextBlock Text="Заполнить абонентов"/>
+                                <TextBlock Text="Начисления"/>
                             </Button>
 
-                            <TextBlock Text="{Binding Hash}"/>
-                            <TextBlock Text="{Binding UnHash}"/>
+                            <!--<TextBlock Text="{Binding Hash}"/>
+                            <TextBlock Text="{Binding UnHash}"/>-->
 
                         </UniformGrid>
 
@@ -159,12 +159,12 @@
                                      Columns="1"
                                      Visibility="{Binding AdminUniBTNVisibility}">
 
-                            <Button Command="{Binding AddEmployee}" Background="#FF3B506E">
+                            <!--<Button Command="{Binding AddEmployee}" Background="#FF3B506E">
                                 <TextBlock Text="Добавить сотрудника"/>
                             </Button>
                             <Button Command="{Binding ShowEmployee}">
                                 <TextBlock Text="Список сотрудников"/>
-                            </Button>
+                            </Button>-->
 
                         </UniformGrid>
 
@@ -191,7 +191,7 @@
                            NavigationUIVisibility="Hidden"
                            Opacity="{Binding FrameOpacity}"
                            VerticalContentAlignment="Center"
-                           HorizontalContentAlignment="Center"/>
+                           HorizontalContentAlignment="Center"/>               
 
                 </Grid>
 
