@@ -202,7 +202,7 @@ namespace DipWACH.Helper
 
         }
 
-        public static List<NewRate> GetRate()
+        public static List<NewRate> GetNewRate()
         {
             List<NewRate> newRates = new List<NewRate>();
 
@@ -239,6 +239,19 @@ namespace DipWACH.Helper
 
         }
 
+        public static List<Rate> GetRate()
+        {
+            using (ModelBD model = new ModelBD())
+            {
+
+                var rates = from r in model.Rate
+                            select r;
+
+                return rates.ToList();
+
+            }
+        }
+
         public static List<Apartment> GetApartments(int idRegion)
         {
             using (ModelBD model = new ModelBD())
@@ -256,22 +269,53 @@ namespace DipWACH.Helper
             }
         }
 
-        public static List<Building> GetBuildings(int idRegion)
+        public static List<Apartment> GetApartments()
         {
-
             using (ModelBD model = new ModelBD())
             {
 
-                var apartments = from b in model.Building
-                                 where b.IDRegion == idRegion && b.IsPrivate == true
-                                 select b;
+                var apartments = from a in model.Apartment
+                                 select a;
 
                 var list = apartments.ToList();
 
                 return list;
 
             }
+        }
 
+        public static List<Building> GetBuildings(int idRegion)
+        {
+
+            using (ModelBD model = new ModelBD())
+            {
+
+                var buildings = from b in model.Building
+                                where b.IDRegion == idRegion && b.IsPrivate == true
+                                select b;
+
+                var list = buildings.ToList();
+
+                return list;
+
+            }
+
+        }
+
+        public static List<Building> GetBuildings()
+        {
+            using (ModelBD model = new ModelBD())
+            {
+
+                var buildings = from b in model.Building
+                                where b.IsPrivate == true
+                                select b;
+
+                var list = buildings.ToList();
+
+                return list;
+
+            }
         }
     }
 }

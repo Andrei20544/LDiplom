@@ -1,0 +1,58 @@
+﻿<Page x:Class="DipWACH.View.Pages.AccrualsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DipWACH.View.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="835" 
+      d:DesignWidth="1390"
+      Title="AccrualsPage">
+
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="58"/>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Индивидуальный расчет"
+                   FontWeight="Black"
+                   HorizontalAlignment="Center"
+                   FontSize="30"/>
+
+        <!--Header-->
+        <Grid VerticalAlignment="Center"
+              Grid.Row="1"
+              Width="1135">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Grid HorizontalAlignment="Left">
+
+                <TextBox Style="{StaticResource MainTextBox}"
+                         Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                         Width="350"
+                         Name="SearchBox"/>
+                <TextBlock Style="{StaticResource UnderBoxTextBlockSearch}"
+                           Text="Поиск"/>
+
+            </Grid>
+
+            <Grid Grid.Column="1">
+
+
+
+            </Grid>
+
+        </Grid>
+
+    </Grid>
+    
+</Page>

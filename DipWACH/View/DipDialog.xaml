@@ -41,6 +41,7 @@
                       Background="#FF212C36">
 
                     <TextBlock Text="Смена пароля"
+                               Name="TitleText"
                                Margin="10 0 0 0"/>
 
                 </Grid>
@@ -49,13 +50,15 @@
                       HorizontalAlignment="Center"
                       VerticalAlignment="Center">
 
-                    <Grid>
+                    <Grid Margin="5">
 
-                        <TextBox Margin="0 5 0 0"
+                        <!--<TextBox Margin="0 5 0 0"
                                  Name="DipDialogTextBox"
-                                 Style="{StaticResource MainTextBox}"/>
+                                 Style="{StaticResource MainTextBox}"/>-->
                         <TextBlock Text="Пароль"
-                                   Style="{StaticResource UnderBoxTextBlockDipWin}"/>
+                                   Name="MainText"
+                                   Foreground="#FFE4E4E4"
+                                   Style="{StaticResource PageTextBlock}"/>
 
                     </Grid>
                     

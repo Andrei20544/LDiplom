@@ -92,31 +92,35 @@
     <Compile Include="Helper\GetData.cs" />
     <Compile Include="Model\Apartment.cs" />
     <Compile Include="Model\Building.cs" />
-    <Compile Include="Model\CalcOfAccruals.cs" />
     <Compile Include="Model\Employee.cs" />
+    <Compile Include="Model\MConnection.cs" />
     <Compile Include="Model\ModelBD.cs" />
+    <Compile Include="Model\NewApartment.cs" />
     <Compile Include="Model\NewEmployee.cs" />
     <Compile Include="Model\NewRate.cs" />
     <Compile Include="Model\NewRegion.cs" />
     <Compile Include="Model\NewSubscriber.cs" />
     <Compile Include="Model\Rate.cs" />
     <Compile Include="Model\Region.cs" />
-    <Compile Include="Model\TypeBuilding.cs" />
+    <Compile Include="Model\Subscriber.cs" />
     <Compile Include="Model\TypeEmployee.cs" />
-    <Compile Include="Model\TypeRate.cs" />
     <Compile Include="RelayCommand.cs" />
     <Compile Include="ViewModel\AddEmployeeViewModel.cs" />
     <Compile Include="ViewModel\CalculateViewModel.cs" />
     <Compile Include="ViewModel\LogINViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\RateViewModel.cs" />
     <Compile Include="View\DipDialog.xaml.cs">
       <DependentUpon>DipDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\LoadWindow.xaml.cs">
       <DependentUpon>LoadWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\Pages\AccrualsPage.xaml.cs">
-      <DependentUpon>AccrualsPage.xaml</DependentUpon>
+    <Compile Include="View\Pages\RatePage.xaml.cs">
+      <DependentUpon>RatePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Pages\SpecialPage.xaml.cs">
+      <DependentUpon>SpecialPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Pages\AddEmployeePage.xaml.cs">
       <DependentUpon>AddEmployeePage.xaml</DependentUpon>
@@ -164,7 +168,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\Pages\AccrualsPage.xaml">
+    <Page Include="View\Pages\RatePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Pages\SpecialPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -40,7 +40,7 @@
                          Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
                          Width="350"
                          Name="SearchBox"/>
-                <TextBlock Style="{StaticResource UnderBoxTextBlockSearch}"
+                <TextBlock Style="{StaticResource UnderBoxTextBlockSearchText}"
                            Text="Поиск"/>
 
             </Grid>

@@ -140,18 +140,14 @@
                                 <TextBlock Text="Заявки"/>
                             </Button>
                             <Button Command="{Binding ShowSubscribers}">
-                                <TextBlock Text="Список Регионов"/>
+                                <TextBlock Text="Расчет по регионам"/>
                             </Button>
-                            <Button>
-                                <TextBlock Text="Сформировать отчет"/>
+                            <Button Command="{Binding ShowSpecialCalculate}">
+                                <TextBlock Text="Индивидуальный расчет"/>
                             </Button>
-
-                            <Button Command="{Binding GetHash}">
-                                <TextBlock Text="Начисления"/>
+                            <Button Command="{Binding ShowRate}">
+                                <TextBlock Text="Тарифы"/>
                             </Button>
-
-                            <!--<TextBlock Text="{Binding Hash}"/>
-                            <TextBlock Text="{Binding UnHash}"/>-->
 
                         </UniformGrid>
 
@@ -191,7 +187,7 @@
                            NavigationUIVisibility="Hidden"
                            Opacity="{Binding FrameOpacity}"
                            VerticalContentAlignment="Center"
-                           HorizontalContentAlignment="Center"/>               
+                           HorizontalContentAlignment="Center"/>                   
 
                 </Grid>
 

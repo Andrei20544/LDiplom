@@ -261,20 +261,27 @@ namespace DipWACH.ViewModel
                 return _calculate ?? (_calculate = new RelayCommand(obj =>
                 {
 
-                    var apartments = GetData.GetApartments(SelectedRegion.IDRegion);
-                    var buildings = GetData.GetBuildings(SelectedRegion.IDRegion);
+                    if (SelectedRegion != null)
+                    {
+                        var apartments = GetData.GetApartments(SelectedRegion.IDRegion);
+                        var buildings = GetData.GetBuildings(SelectedRegion.IDRegion);
 
-                    _apSumm = _calculater.CalculateApartmentSumm(apartments);
-                    _buSumm = _calculater.CalculateBuildingSumm(buildings);
+                        _apSumm = _calculater.CalculateApartmentSumm(apartments);
+                        _buSumm = _calculater.CalculateBuildingSumm(buildings);
 
-                    DocVisible = Visibility.Visible;
+                        DocVisible = Visibility.Visible;
 
-                    RegionText = SelectedRegion.Region;
+                        RegionText = SelectedRegion.Region;
 
-                    BuildingSumm = _buSumm.ToString();
-                    ApartmentSumm = _apSumm.ToString();
+                        BuildingSumm = _buSumm.ToString();
+                        ApartmentSumm = _apSumm.ToString();
 
-                    Itog = (_buSumm + _apSumm).ToString();
+                        Itog = (_buSumm + _apSumm).ToString();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Выберите регион");
+                    }
 
                 }));
             }
@@ -294,6 +301,20 @@ namespace DipWACH.ViewModel
             }
         }
 
+        private RelayCommand _saveInPDF;
+        public RelayCommand SaveInPDF
+        {
+            get
+            {
+                return _saveInPDF ?? (_saveInPDF = new RelayCommand(obj =>
+                {
+                    GeneratePDF(obj as FlowDocumentReader);
+                    DocVisible = Visibility.Collapsed;
+
+                }));
+            }
+        }
+
         private RelayCommand _autoCalculate;
         public RelayCommand AutoCalculate
         {
@@ -301,7 +322,8 @@ namespace DipWACH.ViewModel
             {
                 return _autoCalculate ?? (_autoCalculate = new RelayCommand(obj =>
                 {
-                    GeneratePDF(obj as FlowDocumentReader);
+                    var summ = _calculater.AutoCalculate();
+                    MessageBox.Show($"Общая сумма: {summ}");
                     DocVisible = Visibility.Collapsed;
 
                 }));

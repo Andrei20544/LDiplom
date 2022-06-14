@@ -26,11 +26,6 @@ namespace DipWACH.View
             this.DialogResult = true;
         }
 
-        public string Password
-        {
-            get => DipDialogTextBox.Text;
-        }
-
         private void Cancel_Click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;

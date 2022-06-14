@@ -358,7 +358,7 @@
                         <Button Width="190"
                                 Height="40"
                                 Margin="0 0 15 0"
-                                Command="{Binding AutoCalculate}"
+                                Command="{Binding SaveInPDF}"
                                 CommandParameter="{Binding ElementName=DocReader}">
                             <TextBlock Text="Сохранить в pdf"/>
                         </Button>

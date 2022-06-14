@@ -189,6 +189,24 @@
 
     <Style TargetType="{x:Type TextBlock}"
            BasedOn="{StaticResource UnderBoxTextBlock}"
+           x:Key="UnderBoxTextBlockSearchText">
+
+        <Style.Triggers>
+
+            <DataTrigger Binding="{Binding Text, ElementName=SearchBox}"
+                         Value="">
+
+                <Setter Property="Visibility"
+                        Value="Visible"/>
+
+            </DataTrigger>
+
+        </Style.Triggers>
+
+    </Style>
+    
+    <Style TargetType="{x:Type TextBlock}"
+           BasedOn="{StaticResource UnderBoxTextBlock}"
            x:Key="UnderBoxTextBlockLogin">
 
         <Style.Triggers>
@@ -248,6 +266,42 @@
         <Style.Triggers>
 
             <DataTrigger Binding="{Binding Text, ElementName=DipDialogTextBox}"
+                         Value="">
+
+                <Setter Property="Visibility"
+                        Value="Visible"/>
+
+            </DataTrigger>
+
+        </Style.Triggers>
+
+    </Style>
+
+    <Style TargetType="{x:Type TextBlock}"
+           BasedOn="{StaticResource UnderBoxTextBlock}"
+           x:Key="UnderBoxTextBlockPriceWIn">
+
+        <Style.Triggers>
+
+            <DataTrigger Binding="{Binding Text, ElementName=PriceWInTextBox}"
+                         Value="">
+
+                <Setter Property="Visibility"
+                        Value="Visible"/>
+
+            </DataTrigger>
+
+        </Style.Triggers>
+
+    </Style>
+
+    <Style TargetType="{x:Type TextBlock}"
+           BasedOn="{StaticResource UnderBoxTextBlock}"
+           x:Key="UnderBoxTextBlockPriceWOut">
+
+        <Style.Triggers>
+
+            <DataTrigger Binding="{Binding Text, ElementName=PriceWOutTextBox}"
                          Value="">
 
                 <Setter Property="Visibility"

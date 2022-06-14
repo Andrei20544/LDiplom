@@ -16,12 +16,6 @@ namespace DipWACH.ViewModel
 {
     public class MainViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<NewSubscriber> _subCollectionFull;
-        private ObservableCollection<NewSubscriber> _subCollection;
-
-        private CollectionViewSource _collectionViewSource;
-        //public ICollectionView collectionView => _collectionViewSource.View;
-
         private RegLogWindow _regLog;
         private string _employeeType;
 
@@ -30,6 +24,7 @@ namespace DipWACH.ViewModel
         private Page _addEmployeePage;
         private Page _employeePage;
         private Page _debtsPage;
+        private Page _ratePage;
 
         public MainViewModel(RegLogWindow window, string emplData)
         {
@@ -44,32 +39,12 @@ namespace DipWACH.ViewModel
             _addEmployeePage = new View.Pages.AddEmployeePage();
             _employeePage = new View.Pages.EmployeePage(FIO);
             _debtsPage = new View.Pages.DebtsPage();
+            _ratePage = new View.Pages.RatePage();
 
             FrameOpacity = 1;
         }
 
-        //public MainViewModel(List<NewSubscriber> subscribers)
-        //{
-        //    InicializeCollection(subscribers);
-        //    //NextPage();
-        //}
-
-        public MainViewModel()
-        {
-
-        }
-
-        private void InicializeCollection(List<NewSubscriber> subscribers)
-        {
-
-            //_subCollectionFull = new ObservableCollection<NewSubscriber>();
-
-            //foreach (var sub in subscribers) _subCollectionFull.Add(sub);
-
-            //_collectionViewSource = new CollectionViewSource { Source = _subCollectionFull };
-            //_collectionViewSource.Filter += Items_Filter;
-
-        }
+        public MainViewModel() { }
 
         public MainViewModel(bool app) { }
 
@@ -150,18 +125,6 @@ namespace DipWACH.ViewModel
             {
                 _fIO = value;
                 OnPropertyChanged("FIO");
-            }
-        }
-
-        private string _searchText;
-        public string SearchText
-        {
-            get => _searchText;
-            set
-            {
-                _searchText = value;
-                _collectionViewSource.View.Refresh();
-                OnPropertyChanged("SearchText");
             }
         }
 
@@ -277,83 +240,19 @@ namespace DipWACH.ViewModel
             }
         }
 
-
-        //Get Hash
-        private string hash;
-        public string Hash
-        {
-            get => hash;
-            set
-            {
-                hash = value;
-                OnPropertyChanged("Hash");
-            }
-        }
-
-        private string unhash;
-        public string UnHash
-        {
-            get => unhash;
-            set
-            {
-                unhash = value;
-                OnPropertyChanged("Unhash");
-            }
-        }
-
-        private RelayCommand getHash;
-        public RelayCommand GetHash
+        //Список Тарифов
+        private RelayCommand _showRate;
+        public RelayCommand ShowRate
         {
             get
             {
-                return getHash ?? (getHash = new RelayCommand(obj =>
+                return _showRate ?? (_showRate = new RelayCommand(obj =>
                 {
-                    var password = "123456";
-
-                    var encrPass = CryptoPass.GetEncryptPassword(password);
-
-                    Hash = encrPass;
-
-                    UnHash = CryptoPass.GetDecryptPassword(encrPass);
-
-                    //FillSubData fillSubData = new FillSubData();
-                    //fillSubData.Fill(30);
+                    SlowOpacity(_ratePage);
                 }));
             }
         }
 
-
-        private void Items_Filter(object sender, FilterEventArgs e)
-        {
-
-            NewSubscriber newSubscriber = e.Item as NewSubscriber;
-
-            var fio = newSubscriber.Sername + " " + newSubscriber.Name;
-
-            if (!string.IsNullOrEmpty(SearchText))
-            {
-
-                if (string.IsNullOrEmpty(SearchText))
-                {
-                    e.Accepted = true;
-                    return;
-                }
-
-                if (newSubscriber != null)
-                {
-                    if (fio.ToUpper().Contains(SearchText.ToUpper()))
-                    {
-                        e.Accepted = true;
-                    }
-                    else
-                    {
-                        e.Accepted = false;
-                    }
-                }
-
-            }
-
-        }
 
         private async void SlowOpacity(Page page)
         {
@@ -382,18 +281,17 @@ namespace DipWACH.ViewModel
         {
 
             if (_employeeType.Equals("Admin"))
-            {
-                ProfileIMG = @"/Resource/Avatars/admin.png";
-                UserUniBTNVisibility = Visibility.Collapsed;
-                AdminUniBTNVisibility = Visibility.Visible;
-            }
+                ChangeAvatar(@"/Resource/Avatars/admin.png", Visibility.Collapsed, Visibility.Visible);
             else
-            {
-                ProfileIMG = @"/Resource/Avatars/user.png";
-                UserUniBTNVisibility = Visibility.Visible;
-                AdminUniBTNVisibility = Visibility.Collapsed;
-            }
+                ChangeAvatar(@"/Resource/Avatars/user.png", Visibility.Visible, Visibility.Collapsed);
 
+        }
+
+        private void ChangeAvatar(string path, Visibility userVisible, Visibility adminVisible)
+        {
+            ProfileIMG = path;
+            UserUniBTNVisibility = userVisible;
+            AdminUniBTNVisibility = adminVisible;
         }
 
 

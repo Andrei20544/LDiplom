@@ -6,12 +6,20 @@ namespace DipWACH.Model
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class CalcOfAccruals
+    [Table("MConnection")]
+    public partial class MConnection
     {
         public int ID { get; set; }
 
+        public int IDApartment { get; set; }
+
         public int IDEmployee { get; set; }
 
-        public int IDSubscriber { get; set; }
+        [StringLength(50)]
+        public string Status { get; set; }
+
+        public virtual Apartment Apartment { get; set; }
+
+        public virtual Employee Employee { get; set; }
     }
 }

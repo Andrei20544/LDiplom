@@ -15,7 +15,7 @@ namespace DipWACH.Helper
 
         public Calculater()
         {
-            _newRates = GetData.GetRate();
+            _newRates = GetData.GetNewRate();
         }
 
         private double BSSumm(double? rate, double norm, int? qtyPeople)
@@ -66,8 +66,9 @@ namespace DipWACH.Helper
                         summ += BSSumm(_priceWIn, 8.8, item.QtyPeople) + BSSumm(_priceWOut, 8.8, item.QtyPeople);
                     }
 
-                    return Math.Round(summ, 2);
                 }
+
+                return Math.Round(summ, 2);
             }
 
             return 0;
@@ -85,11 +86,31 @@ namespace DipWACH.Helper
 
                     summ += BSSumm(_priceWIn, 8.8, item.QtyPeople) + BSSumm(_priceWOut, 8.8, item.QtyPeople);
 
-                    return Math.Round(summ, 2);
                 }
+
+                return Math.Round(summ, 2);
             }
 
             return 0;
+        }
+
+        public double AutoCalculate()
+        {
+            double summ = 0;
+
+            var apartments = GetData.GetApartments();
+            var buildings = GetData.GetBuildings();
+
+            if (apartments != null && buildings != null)
+            {
+                var apSumm = CalculateApartmentSumm(apartments);
+                var buSumm = CalculateBuildingSumm(buildings);
+                
+                summ = apSumm + buSumm;
+            }
+
+            return summ;
+
         }
 
     }

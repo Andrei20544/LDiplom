@@ -9,6 +9,12 @@ namespace DipWACH.Model
     [Table("Rate")]
     public partial class Rate
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Rate()
+        {
+            Region = new HashSet<Region>();
+        }
+
         public int ID { get; set; }
 
         public DateTime PeriodStart { get; set; }
@@ -18,5 +24,8 @@ namespace DipWACH.Model
         public double? PriceWInto { get; set; }
 
         public double? PriceWOut { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Region> Region { get; set; }
     }
 }
