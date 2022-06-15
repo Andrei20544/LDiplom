@@ -5,6 +5,8 @@ VisualStudioVersion = 16.0.31624.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DipWACH", "DipWACH\DipWACH.csproj", "{3E9B1F45-D8FA-49EC-8535-5CE22F6B2909}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DipXTest", "DipXTest\DipXTest.csproj", "{59D69D76-E506-4CE1-9D2D-6A1F1774E4C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{3E9B1F45-D8FA-49EC-8535-5CE22F6B2909}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3E9B1F45-D8FA-49EC-8535-5CE22F6B2909}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E9B1F45-D8FA-49EC-8535-5CE22F6B2909}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59D69D76-E506-4CE1-9D2D-6A1F1774E4C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59D69D76-E506-4CE1-9D2D-6A1F1774E4C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59D69D76-E506-4CE1-9D2D-6A1F1774E4C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59D69D76-E506-4CE1-9D2D-6A1F1774E4C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

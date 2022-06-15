@@ -11,18 +11,18 @@ namespace DipWACH.ViewModel
 {
     class RateViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<Rate> _rateCollection = new ObservableCollection<Rate>();
+        private ObservableCollection<NewRatePage> _rateCollection = new ObservableCollection<NewRatePage>();
 
         private CollectionViewSource _collectionViewSource;
         public ICollectionView collectionView => _collectionViewSource.View;
 
-        private List<Rate> _rates;
+        private List<NewRatePage> _rates;
 
         public RateViewModel()
         {
             VisibleGrid = Visibility.Collapsed;
             InicializeRate();
-        }     
+        }
 
         private Visibility _visibleGrid;
         public Visibility VisibleGrid
@@ -32,6 +32,18 @@ namespace DipWACH.ViewModel
             {
                 _visibleGrid = value;
                 OnPropertyChanged("VisibleGrid");
+            }
+        }
+
+        private string _searchText;
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                _searchText = value;
+                _collectionViewSource.View.Refresh();
+                OnPropertyChanged("SearchText");
             }
         }
 
@@ -57,8 +69,8 @@ namespace DipWACH.ViewModel
             }
         }
 
-        private Rate _selectedRate;
-        public Rate SelectedRate
+        private NewRatePage _selectedRate;
+        public NewRatePage SelectedRate
         {
             get => _selectedRate;
             set
@@ -79,7 +91,7 @@ namespace DipWACH.ViewModel
                     if (SelectedRate != null)
                     {
                         ChangePassGridVisible(Visibility.Visible);
-                        PriceINTextBox = SelectedRate.PriceWInto.ToString();
+                        PriceINTextBox = SelectedRate.PriceWIn.ToString();
                         PriceOUTTextBox = SelectedRate.PriceWOut.ToString();
                     }
                     else
@@ -101,23 +113,18 @@ namespace DipWACH.ViewModel
                     {
                         using (ModelBD model = new ModelBD())
                         {
-                            if (!string.IsNullOrEmpty(PriceINTextBox) && !string.IsNullOrEmpty(PriceOUTTextBox))
-                            {
+                            Rate rate = model.Rate.Where(p => p.ID == SelectedRate.ID).FirstOrDefault();
+                            if (!string.IsNullOrEmpty(PriceINTextBox)) rate.PriceWInto = double.Parse(PriceINTextBox);
+                            if (!string.IsNullOrEmpty(PriceOUTTextBox)) rate.PriceWOut = double.Parse(PriceOUTTextBox);
 
-                                Rate rate = model.Rate.Where(p => p.ID == SelectedRate.ID).FirstOrDefault();
-                                rate.PriceWInto = double.Parse(PriceINTextBox);
-                                rate.PriceWOut = double.Parse(PriceOUTTextBox);
+                            model.Entry(rate).State = System.Data.Entity.EntityState.Modified;
+                            model.SaveChanges();
 
-                                model.Entry(rate).State = System.Data.Entity.EntityState.Modified;
-                                model.SaveChanges();
+                            VisibleGrid = Visibility.Collapsed;
 
-                                VisibleGrid = Visibility.Collapsed;
+                            MessageBox.Show($"Тариф изменен");
 
-                                MessageBox.Show($"Тариф изменен");
-
-                                UpdateEmployeeCollection();
-
-                            }
+                            UpdateEmployeeCollection();
                         }
                     }
                     else
@@ -140,13 +147,48 @@ namespace DipWACH.ViewModel
             }
         }
 
+        private void Items_Filter(object sender, FilterEventArgs e)
+        {
+
+            NewRatePage newRegion = e.Item as NewRatePage;
+
+            var name = newRegion.RegionName;
+
+            if (!string.IsNullOrEmpty(SearchText))
+            {
+
+                if (string.IsNullOrEmpty(SearchText))
+                {
+                    e.Accepted = true;
+                    return;
+                }
+
+                if (newRegion != null)
+                {
+
+                    if (name.ToUpper().Contains(SearchText.ToUpper()))
+                    {
+                        e.Accepted = true;
+                    }
+                    else
+                    {
+                        e.Accepted = false;
+                    }
+                }
+
+            }
+
+        }
+
         private void InicializeRate()
         {
-            _rates = GetData.GetRate();
+            _rates = GetData.GetRatePage();
 
             foreach (var rate in _rates) _rateCollection.Add(rate);
 
             _collectionViewSource = new CollectionViewSource { Source = _rateCollection };
+
+            _collectionViewSource.Filter += Items_Filter;
         }
 
         private void UpdateEmployeeCollection()

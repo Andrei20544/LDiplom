@@ -23,9 +23,7 @@ namespace DipWACH.View.Pages
         {
             InitializeComponent();
 
-            var employees = GetData.GetEmployees();
-
-            DataContext = new AddEmployeeViewModel(employees, fio);
+            DataContext = new AddEmployeeViewModel(fio);
 
         }
     }

@@ -41,7 +41,7 @@
                          Width="350"
                          Name="SearchBox"/>
                 <TextBlock Style="{StaticResource UnderBoxTextBlockSearchText}"
-                           Text="Поиск"/>
+                           Text="Поиск по региону"/>
 
             </Grid>
 
@@ -76,7 +76,7 @@
                         <Grid HorizontalAlignment="Center"
                               VerticalAlignment="Center"
                               Width="800"
-                              Height="130"
+                              Height="170"
                               Margin="0 0 0 0">
 
                             <Border CornerRadius="8"
@@ -91,6 +91,7 @@
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="28"/>
                                         <RowDefinition/>
+                                        <RowDefinition Height="40"/>
                                     </Grid.RowDefinitions>
 
                                     <TextBlock Text="Период"
@@ -137,7 +138,7 @@
                                                 <TextBlock Text="Водоснабжение: "
                                                            Width="170"
                                                            Style="{StaticResource PageTextBlock}"/>
-                                                <TextBlock Text="{Binding PriceWInto}"
+                                                <TextBlock Text="{Binding PriceWIn}"
                                                            Style="{StaticResource DefaultPageTextBlock}"/>
                                             </StackPanel>
 
@@ -147,6 +148,25 @@
                                                            Width="170"
                                                            Style="{StaticResource PageTextBlock}"/>
                                                 <TextBlock Text="{Binding PriceWOut}"
+                                                           Style="{StaticResource DefaultPageTextBlock}"/>
+                                            </StackPanel>
+
+                                        </StackPanel>
+
+                                    </Border>
+
+                                    <Border Grid.Row="2"
+                                            Grid.ColumnSpan="2"
+                                            Style="{StaticResource PageBorder}">
+
+                                        <StackPanel VerticalAlignment="Center">
+
+                                            <StackPanel Orientation="Horizontal"
+                                                        Style="{StaticResource PageStackPanel}">
+                                                <TextBlock Text="Регион: "
+                                                           Width="100"
+                                                           Style="{StaticResource PageTextBlock}"/>
+                                                <TextBlock Text="{Binding RegionName}"
                                                            Style="{StaticResource DefaultPageTextBlock}"/>
                                             </StackPanel>
 

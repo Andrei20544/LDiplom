@@ -98,6 +98,7 @@
     <Compile Include="Model\NewApartment.cs" />
     <Compile Include="Model\NewEmployee.cs" />
     <Compile Include="Model\NewRate.cs" />
+    <Compile Include="Model\NewRatePage.cs" />
     <Compile Include="Model\NewRegion.cs" />
     <Compile Include="Model\NewSubscriber.cs" />
     <Compile Include="Model\Rate.cs" />

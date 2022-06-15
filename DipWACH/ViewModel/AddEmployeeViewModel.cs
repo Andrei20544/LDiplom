@@ -16,12 +16,14 @@ namespace DipWACH.ViewModel
 {
     class AddEmployeeViewModel : INotifyPropertyChanged
     {
-        private ObservableCollection<NewEmployee> _employeeCollection = new ObservableCollection<NewEmployee>();
+        private ObservableCollection<NewEmployee> _employeeCollection;
 
         private CollectionViewSource _collectionViewSource;
         public ICollectionView collectionView => _collectionViewSource.View;
 
-        private DipDialog _dipDialog;
+        private List<NewEmployee> _employees;
+
+        private FilterEventHandler _filter;
 
         private string _fIO;
 
@@ -31,9 +33,12 @@ namespace DipWACH.ViewModel
             VisibleGrid = Visibility.Collapsed;
         }
 
-        public AddEmployeeViewModel(List<NewEmployee> employees, string fio)
+        public AddEmployeeViewModel(string fio)
         {
-            InicializeEmployee(employees);
+            _employeeCollection = new ObservableCollection<NewEmployee>();
+
+            InicializeEmployee();
+
             _fIO = fio;
             VisibleGrid = Visibility.Collapsed;
         }
@@ -90,6 +95,18 @@ namespace DipWACH.ViewModel
             {
                 _password = value;
                 OnPropertyChanged("Password");
+            }
+        }
+
+        private string _searchText;
+        public string SearchText
+        {
+            get => _searchText;
+            set
+            {
+                _searchText = value;
+                _collectionViewSource.View.Refresh();
+                OnPropertyChanged("SearchText");
             }
         }
 
@@ -304,6 +321,38 @@ namespace DipWACH.ViewModel
             }
         }
 
+        private void Items_Filter(object sender, FilterEventArgs e)
+        {
+
+            NewEmployee newEmployee = e.Item as NewEmployee;
+
+            var name = newEmployee.Name + newEmployee.MiddleName + newEmployee.Sername;
+
+            if (!string.IsNullOrEmpty(SearchText))
+            {
+
+                if (string.IsNullOrEmpty(SearchText))
+                {
+                    e.Accepted = true;
+                    return;
+                }
+
+                if (newEmployee != null)
+                {
+
+                    if (name.ToUpper().Contains(SearchText.ToUpper()))
+                    {
+                        e.Accepted = true;
+                    }
+                    else
+                    {
+                        e.Accepted = false;
+                    }
+                }
+
+            }
+
+        }
 
         private void ChangePassGridVisible(Visibility visibility)
         {
@@ -338,23 +387,24 @@ namespace DipWACH.ViewModel
 
         }
 
-        private void InicializeEmployee(List<NewEmployee> employees)
+        private void InicializeEmployee()
         {
-            foreach (var sub in employees) _employeeCollection.Add(sub);
+            _employees = GetData.GetEmployees();
+
+            foreach (var sub in _employees) _employeeCollection.Add(sub);
 
             _collectionViewSource = new CollectionViewSource { Source = _employeeCollection };
+
+            _filter = new FilterEventHandler(Items_Filter);
+            _collectionViewSource.Filter += _filter;
         }
 
         private void UpdateEmployeeCollection()
         {
-            var employees = GetData.GetEmployees();
-
             _employeeCollection.Clear();
-            _collectionViewSource = null;
+            _collectionViewSource.Filter -= _filter;
 
-            foreach (var sub in employees) _employeeCollection.Add(sub);
-
-            _collectionViewSource = new CollectionViewSource { Source = _employeeCollection };
+            InicializeEmployee();
 
             _collectionViewSource.View.Refresh();
         }

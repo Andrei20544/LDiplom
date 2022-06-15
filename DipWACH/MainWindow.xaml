@@ -155,12 +155,12 @@
                                      Columns="1"
                                      Visibility="{Binding AdminUniBTNVisibility}">
 
-                            <!--<Button Command="{Binding AddEmployee}" Background="#FF3B506E">
+                            <Button Command="{Binding AddEmployee}" Background="#FF3B506E">
                                 <TextBlock Text="Добавить сотрудника"/>
                             </Button>
                             <Button Command="{Binding ShowEmployee}">
                                 <TextBlock Text="Список сотрудников"/>
-                            </Button>-->
+                            </Button>
 
                         </UniformGrid>
 

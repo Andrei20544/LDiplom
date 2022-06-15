@@ -352,7 +352,7 @@
         <Setter Property="Foreground"
                 Value="Black"/>
         <Setter Property="Width"
-                Value="320"/>
+                Value="130"/>
 
     </Style>
 

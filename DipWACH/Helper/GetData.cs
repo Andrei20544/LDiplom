@@ -18,6 +18,9 @@ namespace DipWACH.Helper
         private static List<NewRegion> _newRegions;
         private static NewRegion _newRegion;
 
+        private static List<NewRatePage> _newRates;
+        private static NewRatePage _newRate;
+
         public static List<Region> GetRegions()
         {
             _regions = new List<Region>();
@@ -248,6 +251,45 @@ namespace DipWACH.Helper
                             select r;
 
                 return rates.ToList();
+
+            }
+        }
+
+        public static List<NewRatePage> GetRatePage()
+        {
+            _newRates = new List<NewRatePage>();
+
+            using (ModelBD model = new ModelBD())
+            {
+
+                var rates = from r in model.Rate
+                            join reg in model.Region on r.ID equals reg.IDRate
+                            select new
+                            {
+                                ID = r.ID,
+                                PeriodStart = r.PeriodStart,
+                                PeriodEnd = r.PeriodEnd,
+                                PriceWIn = r.PriceWInto,
+                                PriceWOut = r.PriceWOut,
+                                RegionName = reg.Name
+                            };
+
+                foreach (var item in rates)
+                {
+                    _newRate = new NewRatePage
+                    {
+                        ID = item.ID,
+                        PeriodStart = item.PeriodStart,
+                        PeriodEnd = item.PeriodEnd,
+                        PriceWIn = item.PriceWIn,
+                        PriceWOut = item.PriceWOut,
+                        RegionName = item.RegionName
+                    };
+
+                    _newRates.Add(_newRate);
+                }
+
+                return _newRates;
 
             }
         }
