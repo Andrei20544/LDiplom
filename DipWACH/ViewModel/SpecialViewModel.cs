@@ -1,13 +1,21 @@
 ﻿using DipWACH.Helper;
 using DipWACH.Model;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using PdfSharp.Pdf.Printing;
+using PdfSharp.Xps;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
+using System.IO.Packaging;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Xps.Packaging;
+using System.Windows.Xps.Serialization;
 
 namespace DipWACH.ViewModel
 {
@@ -26,6 +34,8 @@ namespace DipWACH.ViewModel
         private double _apSumm = 0;
         private double _buSumm = 0;
 
+        private string _filePath;
+        private string _fontPath;
 
         public SpecialViewModel()
         {
@@ -34,6 +44,10 @@ namespace DipWACH.ViewModel
             SetFilterBox();
 
             _calculater = new Calculater();
+
+            var date = DateTime.Now.ToString().Replace(':', '.');
+            _filePath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\ отчет-" + date + ".pdf";
+            _fontPath = Environment.GetFolderPath(Environment.SpecialFolder.Windows) + "\\Fonts\\Arial.ttf";
         }
 
         private ObservableCollection<string> _filterRegionSource;
@@ -205,66 +219,27 @@ namespace DipWACH.ViewModel
             foreach (var item in regions) FilterRegionSource.Add(item.Name);
         }
 
-        private void GeneratePDF(FlowDocumentReader document)
+        private void GeneratePDF()
         {
-            //var path = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\calc.pdf";
-            //var fontPath = Environment.GetFolderPath(Environment.SpecialFolder.Windows) + "\\Fonts\\Arial.ttf";
+            var document = new Document();
 
-            //Document doc = new Document();
+            var streamObj = new FileStream(_filePath, System.IO.FileMode.CreateNew);
+            BaseFont baseFont = BaseFont.CreateFont(_fontPath, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
 
-            //using (var writer = PdfWriter.GetInstance(doc, new FileStream(path, FileMode.Create)))
-            //{
-            //    BaseFont baseFont = BaseFont.CreateFont(fontPath, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-            //    iTextSharp.text.Font font = new iTextSharp.text.Font(baseFont, iTextSharp.text.Font.DEFAULTSIZE, iTextSharp.text.Font.NORMAL);
+            PDFGenerator pDFGenerator = new PDFGenerator(document, baseFont, streamObj);
 
-            //    TextRange txt = new TextRange(document.Document.ContentStart, document.Document.ContentEnd);
-            //    try
-            //    {
-            //        doc.Open();
-            //        iTextSharp.text.Paragraph pr1 = new iTextSharp.text.Paragraph(txt.Text, font);
-            //        doc.Add(pr1);
-            //        doc.Close();
-            //        writer.Close();
-            //        MessageBox.Show("PDF-файл успешно создан");
-            //    }
-            //    catch (Exception EX)
-            //    {
-            //        MessageBox.Show(EX.Message);
-            //    }
-            //}
+            List<string> nameDataCells = new List<string>
+            {
+                $"Водоснабжение-{RateSummWIn}",
+                $"Водоотведение-{RateSummWOut}"
+            };
 
-            //using (var stream = new FileStream("doc.xps", FileMode.Create))
-            //{
-            //    using (var package = Package.Open(stream, FileMode.Create, FileAccess.ReadWrite))
-            //    {
-            //        using (var xpsDoc = new XpsDocument(package, CompressionOption.Maximum))
-            //        {
-            //            var rsm = new XpsSerializationManager(new XpsPackagingPolicy(xpsDoc), false);
-            //            var paginator = ((IDocumentPaginatorSource)document).DocumentPaginator;
-            //            rsm.SaveAsXaml(paginator);
-            //            rsm.Commit();
-            //        }
-            //    }
-            //    stream.Position = 0;
-            //    var pdfXpsDoc = PdfSharp.Xps.XpsModel.XpsDocument.Open(stream);
-            //    PdfSharp.Xps.XpsConverter.Convert(pdfXpsDoc, "doc.pdf", 0);
-            //}
+            //Create PDF
+            document.Open();
 
-            //var ms = new MemoryStream();
-            //var package = Package.Open(ms, FileMode.Create);
-            //var doc = new XpsDocument(package);
-            //var writer = XpsDocument.CreateXpsDocumentWriter(doc);
-            //writer.Write(((IDocumentPaginatorSource)document).DocumentPaginator);
-            //doc.Close();
-            //package.Close();
+            pDFGenerator.GenerateSinglePDF("Квитанция", RegionText, nameDataCells, Itog);
 
-            //// Get XPS file bytes
-            //var bytes = ms.ToArray();
-            //ms.Dispose();
-
-            //// Print to PDF
-            //var outputFilePath = @"C:\tmp\test.pdf";
-            //PdfFilePrinter.PrintXpsToPdf(bytes, outputFilePath, "Document Title");
+            document.Close();
         }
 
         private void Items_Filter(object sender, FilterEventArgs e)
@@ -355,7 +330,7 @@ namespace DipWACH.ViewModel
             {
                 return _saveInPDF ?? (_saveInPDF = new RelayCommand(obj =>
                 {
-                    GeneratePDF(obj as FlowDocumentReader);
+                    GeneratePDF();
                     DocVisible = Visibility.Collapsed;
 
                 }));

@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Aspose.PDF">
+      <HintPath>..\packages\Aspose\Aspose.PDF.dll</HintPath>
+    </Reference>
     <Reference Include="BouncyCastle.Crypto, Version=1.8.9.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
       <HintPath>..\packages\BouncyCastle.1.8.9\lib\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
@@ -129,6 +132,7 @@
     <Compile Include="Helper\DataCompare.cs" />
     <Compile Include="Helper\FillSubData.cs" />
     <Compile Include="Helper\GetData.cs" />
+    <Compile Include="Helper\PDFGenerator.cs" />
     <Compile Include="Model\Apartment.cs" />
     <Compile Include="Model\Building.cs" />
     <Compile Include="Model\Employee.cs" />
