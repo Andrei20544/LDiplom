@@ -13,10 +13,14 @@ namespace DipWACH.Model
 
         public int IDApartment { get; set; }
 
-        public int IDEmployee { get; set; }
+        public int? IDEmployee { get; set; }
 
         [StringLength(50)]
         public string Status { get; set; }
+
+        public bool? BPlan { get; set; }
+
+        public bool? Procuration { get; set; }
 
         public virtual Apartment Apartment { get; set; }
 

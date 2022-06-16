@@ -173,5 +173,53 @@ namespace DipWACH.Helper
 
         }
 
+        public double CalculateSpecialSummWIn(NewApartment newApartment)
+        {
+            double summ = 0;
+
+            if (newApartment != null)
+            {
+                if (newApartment.RatePriceWIn != null)
+                {
+                    if (newApartment.IsWMeter == true)
+                    {
+                        summ = Summ(newApartment.RatePriceWIn, newApartment.WMeter);
+                    }
+                    else
+                    {
+                        summ = BSSumm(newApartment.RatePriceWIn, 8.8, newApartment.QtyPeople);
+                    }
+                }
+
+                return Math.Round(summ, 2);
+            }
+
+            return 0;
+        }
+
+        public double CalculateSpecialSummWOut(NewApartment newApartment)
+        {
+            double summ = 0;
+
+            if (newApartment != null)
+            {
+                if (newApartment.RatePriceWOut != null)
+                {
+                    if (newApartment.IsWMeter == true)
+                    {
+                        summ = Summ(newApartment.RatePriceWOut, newApartment.WMeter);
+                    }
+                    else
+                    {
+                        summ = BSSumm(newApartment.RatePriceWOut, 8.8, newApartment.QtyPeople);
+                    }
+                }
+
+                return Math.Round(summ, 2);
+            }
+
+            return 0;
+        }
+
     }
 }

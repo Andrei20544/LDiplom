@@ -25,6 +25,7 @@ namespace DipWACH.ViewModel
         private Page _employeePage;
         private Page _debtsPage;
         private Page _ratePage;
+        private Page _specialPage;
 
         public MainViewModel(RegLogWindow window, string emplData)
         {
@@ -40,6 +41,7 @@ namespace DipWACH.ViewModel
             _employeePage = new View.Pages.EmployeePage(FIO);
             _debtsPage = new View.Pages.DebtsPage();
             _ratePage = new View.Pages.RatePage();
+            _specialPage = new View.Pages.AccrualsPage();
 
             FrameOpacity = 1;
         }
@@ -175,7 +177,7 @@ namespace DipWACH.ViewModel
         }
 
 
-        //Список абонентов
+        //Список регионов
         private RelayCommand _showSubscribers;
         public RelayCommand ShowSubscribers
         {
@@ -249,6 +251,19 @@ namespace DipWACH.ViewModel
                 return _showRate ?? (_showRate = new RelayCommand(obj =>
                 {
                     SlowOpacity(_ratePage);
+                }));
+            }
+        }
+
+        //Индивидуальный расчет
+        private RelayCommand _showSpecialCalculate;
+        public RelayCommand ShowSpecialCalculate
+        {
+            get
+            {
+                return _showSpecialCalculate ?? (_showSpecialCalculate = new RelayCommand(obj =>
+                {
+                    SlowOpacity(_specialPage);
                 }));
             }
         }

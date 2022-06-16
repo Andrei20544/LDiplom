@@ -37,9 +37,8 @@ namespace DipWACH.Model
 
             modelBuilder.Entity<Employee>()
                 .HasMany(e => e.MConnection)
-                .WithRequired(e => e.Employee)
-                .HasForeignKey(e => e.IDEmployee)
-                .WillCascadeOnDelete(false);
+                .WithOptional(e => e.Employee)
+                .HasForeignKey(e => e.IDEmployee);
 
             modelBuilder.Entity<Rate>()
                 .HasMany(e => e.Region)

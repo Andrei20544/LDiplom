@@ -1,33 +1,25 @@
 ﻿using DipWACH.Helper;
 using DipWACH.Model;
-using iTextSharp.text;
-using iTextSharp.text.pdf;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
-using System.IO.Packaging;
-using System.Printing;
 using System.Windows;
-using System.Windows.Data;
-using System.Windows.Xps.Packaging;
-using System.Windows.Xps;
-using System.Windows.Xps.Serialization;
-using System.Windows.Documents;
 using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace DipWACH.ViewModel
 {
-    public class CalculateViewModel : INotifyPropertyChanged
+    public class SpecialViewModel : INotifyPropertyChanged
     {
         private CollectionViewSource _collectionViewSource;
         public ICollectionView collectionView => _collectionViewSource.View;
 
-        private ObservableCollection<NewRegion> _newRegionCollectionFull;
+        private ObservableCollection<NewApartment> _newRegionCollectionFull;
 
 
-        private List<NewRegion> _newRegions;
+        private List<NewApartment> _newApartments;
         private Calculater _calculater;
 
 
@@ -35,47 +27,69 @@ namespace DipWACH.ViewModel
         private double _buSumm = 0;
 
 
-        public CalculateViewModel()
+        public SpecialViewModel()
         {
             InicializeCollection();
 
+            SetFilterBox();
+
             _calculater = new Calculater();
+        }
 
-        }      
-
-        private ObservableCollection<string> _filterBoxSource;
-        public ObservableCollection<string> FilterBoxSource
+        private ObservableCollection<string> _filterRegionSource;
+        public ObservableCollection<string> FilterRegionSource
         {
-            get => _filterBoxSource;
+            get => _filterRegionSource;
             set
             {
-                _filterBoxSource = value;
-                OnPropertyChanged("FilterBoxSource");
+                _filterRegionSource = value;
+                OnPropertyChanged("FilterRegionSource");
+            }
+        }
+
+        private ObservableCollection<string> _filterSettlementSource;
+        public ObservableCollection<string> FilterSettlementSource
+        {
+            get => _filterSettlementSource;
+            set
+            {
+                _filterSettlementSource = value;
+                OnPropertyChanged("FilterSettlementSource");
             }
         }
 
 
-        private string _selectFilterBox;
-        public string SelectFilterBox
+        private string _filterRegionText;
+        public string FilterRegionText
         {
-            get => _selectFilterBox;
+            get => _filterRegionText;
             set
             {
-                _selectFilterBox = value;
+                _filterRegionText = value;
                 _collectionViewSource.View.Refresh();
-                OnPropertyChanged("SelectFilterBox");
+                OnPropertyChanged("FilterRegionText");
             }
         }
 
-        private string _searchText;
-        public string SearchText
+        private string _filterSettlementText;
+        public string FilterSettlementText
         {
-            get => _searchText;
+            get => _filterSettlementText;
             set
             {
-                _searchText = value;
-                _collectionViewSource.View.Refresh();
-                OnPropertyChanged("SearchText");
+                _filterSettlementText = value;
+                OnPropertyChanged("FilterSettlementText");
+            }
+        }
+
+        private DateTime _date;
+        public DateTime Date
+        {
+            get => _date;
+            set
+            {
+                _date = value;
+                OnPropertyChanged("Date");
             }
         }
 
@@ -90,25 +104,47 @@ namespace DipWACH.ViewModel
             }
         }
 
-        private string _buildingSumm;
-        public string BuildingSumm
+        private string _ratePriceWIn;
+        public string RatePriceWIn
         {
-            get => _buildingSumm;
+            get => _ratePriceWIn;
             set
             {
-                _buildingSumm = value;
-                OnPropertyChanged("BuildingSumm");
+                _ratePriceWIn = value;
+                OnPropertyChanged("RatePriceWIn");
             }
         }
 
-        private string _apartmentSumm;
-        public string ApartmentSumm
+        private string _ratePriceWOut;
+        public string RatePriceWOut
         {
-            get => _apartmentSumm;
+            get => _ratePriceWOut;
             set
             {
-                _apartmentSumm = value;
-                OnPropertyChanged("ApartmentSumm");
+                _ratePriceWOut = value;
+                OnPropertyChanged("RatePriceWOut");
+            }
+        }
+
+        private string _rateSummWIn;
+        public string RateSummWIn
+        {
+            get => _rateSummWIn;
+            set
+            {
+                _rateSummWIn = value;
+                OnPropertyChanged("RateSummWIn");
+            }
+        }
+
+        private string _rateSummWOut;
+        public string RateSummWOut
+        {
+            get => _rateSummWOut;
+            set
+            {
+                _rateSummWOut = value;
+                OnPropertyChanged("RateSummWOut");
             }
         }
 
@@ -124,8 +160,8 @@ namespace DipWACH.ViewModel
         }
 
 
-        private NewRegion _selectedRegion;
-        public NewRegion SelectedRegion
+        private NewApartment _selectedRegion;
+        public NewApartment SelectedRegion
         {
             get => _selectedRegion;
             set
@@ -150,15 +186,23 @@ namespace DipWACH.ViewModel
         {
             DocVisible = Visibility.Collapsed;
 
-            _newRegions = GetData.GetNewRegion();
+            _newApartments = GetData.GetNewApartments();
 
-            _newRegionCollectionFull = new ObservableCollection<NewRegion>();
+            _newRegionCollectionFull = new ObservableCollection<NewApartment>();
 
-            foreach (var region in _newRegions) _newRegionCollectionFull.Add(region);
+            foreach (var region in _newApartments) _newRegionCollectionFull.Add(region);
 
             _collectionViewSource = new CollectionViewSource { Source = _newRegionCollectionFull };
             _collectionViewSource.Filter += Items_Filter;
+        }
 
+        private void SetFilterBox()
+        {
+            FilterRegionSource = new ObservableCollection<string>();
+
+            var regions = GetData.GetRegions();
+
+            foreach (var item in regions) FilterRegionSource.Add(item.Name);
         }
 
         private void GeneratePDF(FlowDocumentReader document)
@@ -205,27 +249,43 @@ namespace DipWACH.ViewModel
             //    var pdfXpsDoc = PdfSharp.Xps.XpsModel.XpsDocument.Open(stream);
             //    PdfSharp.Xps.XpsConverter.Convert(pdfXpsDoc, "doc.pdf", 0);
             //}
+
+            //var ms = new MemoryStream();
+            //var package = Package.Open(ms, FileMode.Create);
+            //var doc = new XpsDocument(package);
+            //var writer = XpsDocument.CreateXpsDocumentWriter(doc);
+            //writer.Write(((IDocumentPaginatorSource)document).DocumentPaginator);
+            //doc.Close();
+            //package.Close();
+
+            //// Get XPS file bytes
+            //var bytes = ms.ToArray();
+            //ms.Dispose();
+
+            //// Print to PDF
+            //var outputFilePath = @"C:\tmp\test.pdf";
+            //PdfFilePrinter.PrintXpsToPdf(bytes, outputFilePath, "Document Title");
         }
 
         private void Items_Filter(object sender, FilterEventArgs e)
         {
 
-            NewRegion newRegion = e.Item as NewRegion;
+            NewApartment newApartment = e.Item as NewApartment;
 
-            var name = newRegion.Settlements;
+            var name = newApartment.RegionName;
 
-            if (!string.IsNullOrEmpty(SearchText))
+            if (!string.IsNullOrEmpty(FilterRegionText))
             {
 
-                if (string.IsNullOrEmpty(SearchText))
+                if (string.IsNullOrEmpty(FilterRegionText))
                 {
                     e.Accepted = true;
                     return;
                 }
 
-                if (newRegion != null && !string.IsNullOrEmpty(name))
+                if (newApartment != null)
                 {
-                    if (name.ToUpper().Contains(SearchText.ToUpper()))
+                    if (name.ToUpper().Contains(FilterRegionText.ToUpper()))
                     {
                         e.Accepted = true;
                     }
@@ -250,20 +310,20 @@ namespace DipWACH.ViewModel
 
                     if (SelectedRegion != null)
                     {
-                        var apartments = GetData.GetApartments(SelectedRegion.IDRegion);
-                        var buildings = GetData.GetBuildings(SelectedRegion.IDRegion);
-
-                        _apSumm = _calculater.CalculateApartmentSumm(apartments);
-                        _buSumm = _calculater.CalculateBuildingSumm(buildings);
-
                         DocVisible = Visibility.Visible;
 
-                        RegionText = SelectedRegion.Region;
+                        var summWIn = _calculater.CalculateSpecialSummWIn(SelectedRegion);
+                        var summWOut = _calculater.CalculateSpecialSummWOut(SelectedRegion);
 
-                        BuildingSumm = _buSumm.ToString();
-                        ApartmentSumm = _apSumm.ToString();
+                        Date = DateTime.Now;
 
-                        Itog = (_buSumm + _apSumm).ToString();
+                        RegionText = SelectedRegion.RegionName;
+                        RatePriceWIn = SelectedRegion.RatePriceWIn.ToString();
+                        RatePriceWOut = SelectedRegion.RatePriceWOut.ToString();
+                        RateSummWIn = summWIn.ToString();
+                        RateSummWOut = summWOut.ToString();
+
+                        Itog = (summWIn + summWOut).ToString();
                     }
                     else
                     {
@@ -296,21 +356,6 @@ namespace DipWACH.ViewModel
                 return _saveInPDF ?? (_saveInPDF = new RelayCommand(obj =>
                 {
                     GeneratePDF(obj as FlowDocumentReader);
-                    DocVisible = Visibility.Collapsed;
-
-                }));
-            }
-        }
-
-        private RelayCommand _autoCalculate;
-        public RelayCommand AutoCalculate
-        {
-            get
-            {
-                return _autoCalculate ?? (_autoCalculate = new RelayCommand(obj =>
-                {
-                    var summ = _calculater.AutoCalculate();
-                    MessageBox.Show($"Общая сумма: {summ}");
                     DocVisible = Visibility.Collapsed;
 
                 }));

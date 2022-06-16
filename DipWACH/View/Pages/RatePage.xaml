@@ -15,7 +15,7 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="58"/>
             <RowDefinition/>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
 
         <TextBlock Text="Тарифы"

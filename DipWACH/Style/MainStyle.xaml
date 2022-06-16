@@ -261,6 +261,24 @@
 
     <Style TargetType="{x:Type TextBlock}"
            BasedOn="{StaticResource UnderBoxTextBlock}"
+           x:Key="UnderBoxTextBlockSearchS">
+
+        <Style.Triggers>
+
+            <DataTrigger Binding="{Binding Text, ElementName=ComboSearchS}"
+                         Value="">
+
+                <Setter Property="Visibility"
+                        Value="Visible"/>
+
+            </DataTrigger>
+
+        </Style.Triggers>
+
+    </Style>
+
+    <Style TargetType="{x:Type TextBlock}"
+           BasedOn="{StaticResource UnderBoxTextBlock}"
            x:Key="UnderBoxTextBlockDipWin">
 
         <Style.Triggers>

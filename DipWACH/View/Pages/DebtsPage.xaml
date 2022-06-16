@@ -5,24 +5,54 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DipWACH.View.Pages"
       mc:Ignorable="d" 
-      d:DesignHeight="830" 
+      d:DesignHeight="835" 
       d:DesignWidth="1390"
       Title="DebtsPage">
 
     <Grid>
 
-        <TextBlock Text="Debts"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="58"/>
+            <RowDefinition/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Задолженности"
+                   FontWeight="Black"
                    HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   FontSize="30">
-            <TextBlock.Effect>
-                <DropShadowEffect BlurRadius="15"
-                                  ShadowDepth="0"
-                                  Direction="0"
-                                  Opacity="0.7"
-                                  RenderingBias="Quality"/>
-            </TextBlock.Effect>
-        </TextBlock>
+                   FontSize="30"/>
+
+        <!--Header-->
+        <Grid VerticalAlignment="Center"
+              Grid.Row="1">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Grid HorizontalAlignment="Center">
+
+                <TextBox Style="{StaticResource MainTextBox}"
+                         Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                         Width="350"
+                         Name="SearchBox"/>
+                <TextBlock Style="{StaticResource UnderBoxTextBlockSearchText}"
+                           Text="Поиск"/>
+
+            </Grid>
+
+            <Grid Grid.Column="1">
+
+
+
+            </Grid>
+
+        </Grid>
+        
+        
 
     </Grid>
     

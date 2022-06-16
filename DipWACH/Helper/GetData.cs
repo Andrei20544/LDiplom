@@ -21,6 +21,12 @@ namespace DipWACH.Helper
         private static List<NewRatePage> _newRates;
         private static NewRatePage _newRate;
 
+        private static List<NewMConnection> _newMConnections;
+        private static NewMConnection _newMConnection;
+
+        private static List<NewApartment> _newApartments;
+        private static NewApartment _newApartment;
+
         public static List<Region> GetRegions()
         {
             _regions = new List<Region>();
@@ -326,6 +332,56 @@ namespace DipWACH.Helper
             }
         }
 
+        public static List<NewApartment> GetNewApartments()
+        {
+            _newApartments = new List<NewApartment>();
+
+            using (ModelBD model = new ModelBD())
+            {
+
+                var apartments = from a in model.Apartment
+                                 join b in model.Building on a.IDBuilding equals b.ID
+                                 join r in model.Region on b.IDRegion equals r.ID
+                                 join rate in model.Rate on r.IDRate equals rate.ID
+                                 select new
+                                 {
+                                     ID = a.ID,
+                                     PeriodStart = a.PeriodStart,
+                                     PeriodEnd = a.PeriodEnd,
+                                     Number = a.Number,
+                                     QtyPeople = a.QtyPeople,
+                                     WMeter = a.WMeter,
+                                     Address = b.Address,
+                                     RegionName = r.Name,
+                                     PriceWIn = rate.PriceWInto,
+                                     PriceWOut = rate.PriceWOut,
+                                     IsWMeter = a.IsWMeter
+                                 };
+
+                foreach (var item in apartments)
+                {
+                    _newApartment = new NewApartment
+                    {
+                        ID = item.ID,
+                        PeriodStart = item.PeriodStart,
+                        PeriodEnd = item.PeriodEnd,
+                        Address = item.Address,
+                        WMeter = item.WMeter,
+                        Number = item.Number,
+                        QtyPeople = item.QtyPeople,
+                        RegionName = item.RegionName,
+                        RatePriceWIn = item.PriceWIn,
+                        RatePriceWOut = item.PriceWOut,
+                        IsWMeter = item.IsWMeter
+                    };
+
+                    _newApartments.Add(_newApartment);
+                }
+
+                return _newApartments;
+            }
+        }
+
         public static List<Building> GetBuildings(int idRegion)
         {
 
@@ -356,6 +412,58 @@ namespace DipWACH.Helper
                 var list = buildings.ToList();
 
                 return list;
+
+            }
+        }
+
+        public static List<NewMConnection> GetConnection()
+        {
+            _newMConnections = new List<NewMConnection>();
+
+            using (ModelBD model = new ModelBD())
+            {
+                var plan = "";
+                var procuration = "";
+                var accept = 0;
+
+                var rates = from r in model.MConnection
+                            join a in model.Apartment on r.IDApartment equals a.ID
+                            join b in model.Building on a.IDBuilding equals b.ID
+                            select new
+                            {
+                                ID = r.ID,
+                                Address = b.Address,
+                                Status = r.Status,
+                                BPlan = r.BPlan,
+                                Procuration = r.Procuration
+                            };
+
+                foreach (var item in rates)
+                {
+                    if (item.BPlan == true) plan = "Есть";
+                    else plan = "Нет";
+
+                    if (item.Procuration == true) procuration = "Есть";
+                    else procuration = "Нет";
+
+                    if (item.BPlan == true && item.Procuration == true) accept = 1;
+
+                    _newMConnection = new NewMConnection
+                    {
+                        ID = item.ID,
+                        Address = item.Address,
+                        BPlan = plan,
+                        Status = item.Status,
+                        Procuration = procuration,
+                        Accept = accept
+                    };
+
+                    _newMConnections.Add(_newMConnection);
+
+                    accept = 0;
+                }
+
+                return _newMConnections;
 
             }
         }

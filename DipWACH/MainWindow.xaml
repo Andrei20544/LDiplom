@@ -133,9 +133,9 @@
                                      Columns="1"
                                      Visibility="{Binding UserUniBTNVisibility}">
 
-                            <Button Command="{Binding ShowDebts}">
+                            <!--<Button Command="{Binding ShowDebts}">
                                 <TextBlock Text="Задолженности"/>
-                            </Button>
+                            </Button>-->
                             <Button Command="{Binding ShowApplications}">
                                 <TextBlock Text="Заявки"/>
                             </Button>
@@ -188,6 +188,7 @@
                            Opacity="{Binding FrameOpacity}"
                            VerticalContentAlignment="Center"
                            HorizontalContentAlignment="Center"/>                   
+
 
                 </Grid>
 

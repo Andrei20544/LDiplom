@@ -18,8 +18,10 @@ namespace DipXTest
             var calc = new Calculater(true);
 
             var apartments = new List<Apartment>() {
-                new Apartment { ID = 1, IDBuilding = 1, IsWMeter = true, Number = 10, Penalties = 0, PeriodEnd = DateTime.Now, PeriodStart = DateTime.Now, QtyPeople = 3, WMeter = 16 },
-                new Apartment { ID = 2, IDBuilding = 1, IsWMeter = false, Number = 10, Penalties = 0, PeriodEnd = DateTime.Now, PeriodStart = DateTime.Now, QtyPeople = 3, WMeter = 16 }
+                new Apartment { ID = 1, IDBuilding = 1, IsWMeter = true, Number = 10, Penalties = 0, 
+                                PeriodEnd = DateTime.Now, PeriodStart = DateTime.Now, QtyPeople = 3, WMeter = 16 },
+                new Apartment { ID = 2, IDBuilding = 1, IsWMeter = false, Number = 10, Penalties = 0, 
+                                PeriodEnd = DateTime.Now, PeriodStart = DateTime.Now, QtyPeople = 3, WMeter = 16 }
             };
 
             var firstAp = apartments.Where(p => p.ID == 1).FirstOrDefault();
@@ -40,8 +42,10 @@ namespace DipXTest
             var calc = new Calculater(true);
 
             var buildings = new List<Building>() {
-                new Building { ID = 1, QtyFloor = 2, QtyApartment = 0, QtyPeople = 3, Address = "Some address", IDRegion = 1, IsPrivate = true, Penalties = 0 },
-                new Building { ID = 2, QtyFloor = 2, QtyApartment = 0, QtyPeople = 4, Address = "Some address", IDRegion = 1, IsPrivate = true, Penalties = 0 }
+                new Building { ID = 1, QtyFloor = 2, QtyApartment = 0, QtyPeople = 3, 
+                               Address = "Some address", IDRegion = 1, IsPrivate = true, Penalties = 0 },
+                new Building { ID = 2, QtyFloor = 2, QtyApartment = 0, QtyPeople = 4, 
+                               Address = "Some address", IDRegion = 1, IsPrivate = true, Penalties = 0 }
             };
 
             var firstAp = buildings.Where(p => p.ID == 1).FirstOrDefault();
@@ -62,13 +66,17 @@ namespace DipXTest
             var calc = new Calculater(true);
 
             var buildings = new List<Building>() {
-                new Building { ID = 1, QtyFloor = 2, QtyApartment = 0, QtyPeople = 3, Address = "Some address", IDRegion = 1, IsPrivate = true, Penalties = 0 },
-                new Building { ID = 2, QtyFloor = 2, QtyApartment = 0, QtyPeople = 4, Address = "Some address", IDRegion = 1, IsPrivate = true, Penalties = 0 }
+                new Building { ID = 1, QtyFloor = 2, QtyApartment = 0, QtyPeople = 3, 
+                               Address = "Some address", IDRegion = 1, IsPrivate = true, Penalties = 0 },
+                new Building { ID = 2, QtyFloor = 2, QtyApartment = 0, QtyPeople = 4, 
+                               Address = "Some address", IDRegion = 1, IsPrivate = true, Penalties = 0 }
             };
 
             var apartments = new List<Apartment>() {
-                new Apartment { ID = 1, IDBuilding = 1, IsWMeter = true, Number = 10, Penalties = 0, PeriodEnd = DateTime.Now, PeriodStart = DateTime.Now, QtyPeople = 3, WMeter = 16 },
-                new Apartment { ID = 2, IDBuilding = 1, IsWMeter = false, Number = 10, Penalties = 0, PeriodEnd = DateTime.Now, PeriodStart = DateTime.Now, QtyPeople = 3, WMeter = 16 }
+                new Apartment { ID = 1, IDBuilding = 1, IsWMeter = true, Number = 10, Penalties = 0, 
+                                PeriodEnd = DateTime.Now, PeriodStart = DateTime.Now, QtyPeople = 3, WMeter = 16 },
+                new Apartment { ID = 2, IDBuilding = 1, IsWMeter = false, Number = 10, Penalties = 0, 
+                                PeriodEnd = DateTime.Now, PeriodStart = DateTime.Now, QtyPeople = 3, WMeter = 16 }
             };
 
             var firstBu = buildings.Where(p => p.ID == 1).FirstOrDefault();

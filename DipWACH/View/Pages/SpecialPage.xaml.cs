@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DipWACH.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,14 +16,13 @@ using System.Windows.Shapes;
 
 namespace DipWACH.View.Pages
 {
-    /// <summary>
-    /// Логика взаимодействия для AccrualsPage.xaml
-    /// </summary>
     public partial class AccrualsPage : Page
     {
         public AccrualsPage()
         {
             InitializeComponent();
+
+            DataContext = new SpecialViewModel();
         }
     }
 }

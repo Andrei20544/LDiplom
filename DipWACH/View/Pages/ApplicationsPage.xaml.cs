@@ -22,7 +22,7 @@ namespace DipWACH.View.Pages
         {
             InitializeComponent();
 
-            DataContext = new MainViewModel(true);
+            DataContext = new ApplicationViewModel();
         }
     }
 }
