@@ -10,6 +10,7 @@ namespace DipWACH.Helper
     public class Calculater
     {
         private List<NewRate> _newRates;
+        private List<string> _summs;
         private double? _priceWIn;
         private double? _priceWOut;
 
@@ -154,6 +155,30 @@ namespace DipWACH.Helper
             }
 
             return summ;
+
+        }
+
+        public List<string> AutoCalculateForPDF()
+        {
+            double summ = 0;
+            _summs = new List<string>();
+
+            var regions = GetData.GetRegions();
+
+            foreach (var item in regions)
+            {
+                var apartments = GetData.GetApartments(item.ID);
+                var buildings = GetData.GetBuildings(item.ID);
+
+                var apSumm = CalculateApartmentSumm(apartments);
+                var buSumm = CalculateBuildingSumm(buildings);
+
+                summ = apSumm + buSumm;
+
+                _summs.Add($"{item.Name}-{summ}");
+            }
+
+            return _summs;
 
         }
 

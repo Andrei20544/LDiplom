@@ -162,7 +162,7 @@ namespace DipWACH.ViewModel
 
         }
 
-        private void GeneratePDF()
+        private void GeneratePDF(string title, List<string> nameDataCells, bool isMulti = false)
         {
             var document = new Document();
 
@@ -171,16 +171,10 @@ namespace DipWACH.ViewModel
 
             PDFGenerator pDFGenerator = new PDFGenerator(document, baseFont, streamObj);
 
-            List<string> nameDataCells = new List<string>
-            {
-                $"Сумма по частным домам-{BuildingSumm}",
-                $"Сумма по квартирам-{ApartmentSumm}"
-            };
-
             //Create PDF
             document.Open();
 
-            pDFGenerator.GenerateSinglePDF("Отчет по региону", RegionText, nameDataCells, Itog);
+            pDFGenerator.GenerateSinglePDF(title, RegionText, nameDataCells, Itog, isMulti);
 
             document.Close();
         }
@@ -273,7 +267,12 @@ namespace DipWACH.ViewModel
             {
                 return _saveInPDF ?? (_saveInPDF = new RelayCommand(obj =>
                 {
-                    GeneratePDF();
+                    List<string> nameDataCells = new List<string>
+                    {
+                        $"Сумма по частным домам-{BuildingSumm}",
+                        $"Сумма по квартирам-{ApartmentSumm}"
+                    };
+                    GeneratePDF("Отчет по региону", nameDataCells);
                     DocVisible = Visibility.Collapsed;
 
                 }));
@@ -288,6 +287,9 @@ namespace DipWACH.ViewModel
                 return _autoCalculate ?? (_autoCalculate = new RelayCommand(obj =>
                 {
                     var summ = _calculater.AutoCalculate();
+                    var summs = _calculater.AutoCalculateForPDF();
+                    Itog = summ.ToString();
+                    GeneratePDF("Отчет по всем регионам", summs, true);
                     MessageBox.Show($"Общая сумма: {summ}");
                     DocVisible = Visibility.Collapsed;
 

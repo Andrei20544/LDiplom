@@ -45,6 +45,7 @@ namespace DipWACH.Helper
 
                         _region = new Region
                         {
+                            ID = item.ID,
                             Name = item.Name,
                             Settlements = item.Settlements
                         };

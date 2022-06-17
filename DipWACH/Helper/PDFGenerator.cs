@@ -38,16 +38,19 @@ namespace DipWACH.Helper
             _font = new Font(baseFont, Font.DEFAULTSIZE, Font.NORMAL);
         }
 
-        public void GenerateSinglePDF(string title, string reginName, List<string> nameDataCells, string Itog)
+        public void GenerateSinglePDF(string title, string reginName, List<string> nameDataCells, string Itog, bool isMulti = false)
         {
 
-            SetParagraph(title, 22f);
+            SetParagraph(title, 22f, 1);
 
             SetLine();
 
-            SetParagraph($"Регион: {reginName}");
+            if (isMulti == false)
+            {
+                SetParagraph($"Регион: {reginName}");
 
-            SetLine();
+                SetLine();
+            }
 
             GenerateTable(2, DateTime.Now.ToString(), nameDataCells);
 
@@ -60,7 +63,7 @@ namespace DipWACH.Helper
         public void GenerateMultiPDF(string title, List<string> regions, List<string> nameDataCells, string Itog)
         {
 
-            SetParagraph(title, 22f);
+            SetParagraph(title, 22f, 1);
 
             foreach (var item in regions)
             {
@@ -107,15 +110,17 @@ namespace DipWACH.Helper
 
         }
 
-        public void SetParagraph(string name)
+        public void SetParagraph(string name, int centerAlignment = 0)
         {
             _paragraph = new Paragraph(name, _font);
+            _paragraph.Alignment = centerAlignment;
             _document.Add(_paragraph);
         }
 
-        public void SetParagraph(string name, float size)
+        public void SetParagraph(string name, float size, int centerAlignment = 0)
         {
             _paragraph = new Paragraph(name, new Font(_baseFont, size, Font.NORMAL));
+            _paragraph.Alignment = centerAlignment;
             _document.Add(_paragraph);
         }
 
