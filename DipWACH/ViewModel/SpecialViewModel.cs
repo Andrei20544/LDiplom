@@ -46,7 +46,7 @@ namespace DipWACH.ViewModel
             _calculater = new Calculater();
 
             var date = DateTime.Now.ToString().Replace(':', '.');
-            _filePath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\ отчет-" + date + ".pdf";
+            _filePath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\отчет-" + date + ".pdf";
             _fontPath = Environment.GetFolderPath(Environment.SpecialFolder.Windows) + "\\Fonts\\Arial.ttf";
         }
 
@@ -221,25 +221,32 @@ namespace DipWACH.ViewModel
 
         private void GeneratePDF()
         {
-            var document = new Document();
-
-            var streamObj = new FileStream(_filePath, System.IO.FileMode.CreateNew);
-            BaseFont baseFont = BaseFont.CreateFont(_fontPath, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
-
-            PDFGenerator pDFGenerator = new PDFGenerator(document, baseFont, streamObj);
-
-            List<string> nameDataCells = new List<string>
+            try
             {
-                $"Водоснабжение-{RateSummWIn}",
-                $"Водоотведение-{RateSummWOut}"
-            };
+                var document = new Document();
 
-            //Create PDF
-            document.Open();
+                var streamObj = new FileStream(_filePath, FileMode.CreateNew);
+                BaseFont baseFont = BaseFont.CreateFont(_fontPath, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
 
-            pDFGenerator.GenerateSinglePDF("Квитанция", RegionText, nameDataCells, Itog);
+                PDFGenerator pDFGenerator = new PDFGenerator(document, baseFont, streamObj);
 
-            document.Close();
+                List<string> nameDataCells = new List<string>
+                {
+                    $"Водоснабжение-{RateSummWIn}",
+                    $"Водоотведение-{RateSummWOut}"
+                };
+
+                //Create PDF
+                document.Open();
+
+                pDFGenerator.GenerateSinglePDF("Квитанция", RegionText, nameDataCells, Itog);
+
+                document.Close();
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
         }
 
         private void Items_Filter(object sender, FilterEventArgs e)

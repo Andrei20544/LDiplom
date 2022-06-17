@@ -40,7 +40,7 @@ namespace DipWACH.ViewModel
             _calculater = new Calculater();
 
             var date = DateTime.Now.ToString().Replace(':', '.');
-            _filePath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\ отчет-" + date + ".pdf";
+            _filePath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory) + "\\отчет-" + date + ".pdf";
             _fontPath = Environment.GetFolderPath(Environment.SpecialFolder.Windows) + "\\Fonts\\Arial.ttf";
         }
 
@@ -164,19 +164,26 @@ namespace DipWACH.ViewModel
 
         private void GeneratePDF(string title, List<string> nameDataCells, bool isMulti = false)
         {
-            var document = new Document();
+            try
+            {
+                var document = new Document();
 
-            var streamObj = new FileStream(_filePath, FileMode.CreateNew);
-            BaseFont baseFont = BaseFont.CreateFont(_fontPath, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
+                var streamObj = new FileStream(_filePath, FileMode.CreateNew);
+                BaseFont baseFont = BaseFont.CreateFont(_fontPath, BaseFont.IDENTITY_H, BaseFont.NOT_EMBEDDED);
 
-            PDFGenerator pDFGenerator = new PDFGenerator(document, baseFont, streamObj);
+                PDFGenerator pDFGenerator = new PDFGenerator(document, baseFont, streamObj);
 
-            //Create PDF
-            document.Open();
+                //Create PDF
+                document.Open();
 
-            pDFGenerator.GenerateSinglePDF(title, RegionText, nameDataCells, Itog, isMulti);
+                pDFGenerator.GenerateSinglePDF(title, RegionText, nameDataCells, Itog, isMulti);
 
-            document.Close();
+                document.Close();
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
         }
 
         private void Items_Filter(object sender, FilterEventArgs e)
