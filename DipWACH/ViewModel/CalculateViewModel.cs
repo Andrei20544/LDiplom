@@ -124,6 +124,17 @@ namespace DipWACH.ViewModel
             }
         }
 
+        private string _allSumm;
+        public string AllSumm
+        {
+            get => _allSumm;
+            set
+            {
+                _allSumm = value;
+                OnPropertyChanged("AllSumm");
+            }
+        }
+
 
         private NewRegion _selectedRegion;
         public NewRegion SelectedRegion
@@ -147,9 +158,21 @@ namespace DipWACH.ViewModel
             }
         }
 
+        private Visibility _visibleGridAutoCalc;
+        public Visibility VisibleGridAutoCalc
+        {
+            get => _visibleGridAutoCalc;
+            set
+            {
+                _visibleGridAutoCalc = value;
+                OnPropertyChanged("VisibleGridAutoCalc");
+            }
+        }
+
         private void InicializeCollection()
         {
             DocVisible = Visibility.Collapsed;
+            VisibleGridAutoCalc = Visibility.Collapsed;
 
             _newRegions = GetData.GetNewRegion();
 
@@ -297,8 +320,21 @@ namespace DipWACH.ViewModel
                     var summs = _calculater.AutoCalculateForPDF();
                     Itog = summ.ToString();
                     GeneratePDF("Отчет по всем регионам", summs, true);
-                    MessageBox.Show($"Общая сумма: {summ}");
-                    DocVisible = Visibility.Collapsed;
+
+                    AllSumm = summ.ToString() + " руб.";
+                    VisibleGridAutoCalc = Visibility.Visible;
+                }));
+            }
+        }
+
+        private RelayCommand _acceptBTN;
+        public RelayCommand AcceptBTN
+        {
+            get
+            {
+                return _acceptBTN ?? (_acceptBTN = new RelayCommand(obj =>
+                {
+                    VisibleGridAutoCalc = Visibility.Collapsed;
 
                 }));
             }

@@ -301,5 +301,77 @@
 
         </Grid>
 
+        <Grid Grid.RowSpan="4"
+              Background="#B21F1F1F"
+              Visibility="{Binding VisibleGridAutoCalc}">
+
+            <Border CornerRadius="5"
+                    Margin="5"
+                    Height="255"
+                    Width="360">
+                <Border.Background>
+                    <ImageBrush ImageSource="/DipWACH;component/Resource/fonV.jpg"/>
+                </Border.Background>
+                <Border.Effect>
+                    <DropShadowEffect BlurRadius="15"
+                                      ShadowDepth="0"
+                                      Direction="0"
+                                      Opacity="0.5"
+                                      RenderingBias="Quality"/>
+                </Border.Effect>
+
+                <Grid>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0"
+                          Background="#FF212C36">
+
+                        <TextBlock Text="Общая сумма по всем ренионам"
+                                   Margin="10 0 0 0"/>
+
+                    </Grid>
+
+                    <Grid Grid.Row="1"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center">
+
+                        <StackPanel Orientation="Vertical">
+
+                            <Grid Margin="0 0 0 10">
+
+                                <TextBlock Text="{Binding AllSumm}"
+                                           FontSize="26"
+                                           Foreground="White"
+                                           Style="{StaticResource DefaultPageTextBlock}"/>
+
+                            </Grid>
+
+                        </StackPanel>
+
+                    </Grid>
+
+                    <Grid Grid.Row="2"
+                          HorizontalAlignment="Right">
+
+                        <Button Margin="3 0 15 0"
+                                Height="30"
+                                Width="135"
+                                Command="{Binding AcceptBTN}">
+                            <TextBlock Text="ОК"/>
+                        </Button>
+
+                    </Grid>
+
+                </Grid>
+
+            </Border>
+
+        </Grid>
+
     </Grid>
 </Page>
