@@ -96,5 +96,61 @@ namespace DipXTest
             Assert.Equal(Math.Round((double)(MySummAp + MySummBu), 2), Summ);
 
         }
+
+        [Fact]
+        public void CalculateSpecialSummWInTest()
+        {
+            var calc = new Calculater(true);
+
+            var newApartment = new NewApartment
+            {
+                ID = 1,
+                IsWMeter = true,
+                PeriodStart = DateTime.Now,
+                PeriodEnd = DateTime.Now,
+                Number = 10,
+                Address = "Some address",
+                RatePriceWIn = 17,
+                RatePriceWOut = 14,
+                RegionName = "Region Name",
+                QtyPeople = 3,
+                WMeter = 16
+            };
+
+            double MySumm = (double)(newApartment.RatePriceWIn * newApartment.WMeter);
+
+            var Summ = calc.CalculateSpecialSummWIn(newApartment);
+
+            Assert.Equal(Math.Round(MySumm, 2), Summ);
+
+        }
+
+        [Fact]
+        public void CalculateSpecialSummWOutTest()
+        {
+            var calc = new Calculater(true);
+
+            var newApartment = new NewApartment
+            {
+                ID = 1,
+                IsWMeter = true,
+                PeriodStart = DateTime.Now,
+                PeriodEnd = DateTime.Now,
+                Number = 10,
+                Address = "Some address",
+                RatePriceWIn = 17,
+                RatePriceWOut = 14,
+                RegionName = "Region Name",
+                QtyPeople = 3,
+                WMeter = 16
+            };
+
+            double MySumm = (double)(newApartment.RatePriceWOut * newApartment.WMeter);
+
+            var Summ = calc.CalculateSpecialSummWOut(newApartment);
+
+            Assert.Equal(Math.Round(MySumm, 2), Summ);
+
+        }
     }
 }
